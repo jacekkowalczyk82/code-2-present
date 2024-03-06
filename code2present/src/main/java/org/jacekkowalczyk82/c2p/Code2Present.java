@@ -3,16 +3,21 @@
  */
 package org.jacekkowalczyk82.c2p;
 
+import org.apache.poi.sl.usermodel.Placeholder;
 import org.apache.poi.xslf.usermodel.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+
+
 
 public class Code2Present {
 
     private XMLSlideShow p;
+    private XSLFSlide titleSlide;
     private XSLFSlideMaster defaultMaster;
     private XSLFSlideLayout titleLayout;
     private XSLFSlideLayout layout;
@@ -48,13 +53,13 @@ public class Code2Present {
         System.out.println(c2p.getGreeting());
 
         //code-2-present-template1.pptx
-        c2p.fromTemplate("code-2-present-template1.pptx");
+        c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
 
         c2p.title("This is Title", "Subtitle Author date");
 
-        c2p.macOsSlide("slide 1", Content.withText("this is a paragraph text on the slide"));
-
+        c2p.slide("slide 2", Content.withText("this is a paragraph text on the slide 2"));
+        
 //        c2p.slide("slide 2", Content.withUlList(
 //                "Elem 1",
 //                "Elem 2")
@@ -70,6 +75,35 @@ public class Code2Present {
         }
 
 
+    }
+
+    public void copyPlaceHoldersFromTemplate(XSLFSlide titleSlide, XSLFSlide slide) {  
+  
+        List<XSLFShape> titleSlideShapes = titleSlide.getShapes();  
+        for (XSLFShape shape : titleSlideShapes) {  
+            Placeholder ph = shape.getPlaceholder();  
+  
+                System.out.println(shape.getShapeName() + " " + shape.getPlaceholder());  
+//                ((XSLFTextShape) shape).setText("Test Text");  
+  
+                if (ph == null) {  
+                    continue;  
+                }  
+  
+                switch (ph) {  
+                // these are special and not copied by default  
+                    case DATETIME:  
+                    case SLIDE_NUMBER:  
+                    case FOOTER:  
+                        System.out.println("Copying placeholder : "+ ph);  
+                        slide.getXmlObject().getCSld().getSpTree().addNewSp().set(shape.getXmlObject().copy());  
+                        break; 
+                    
+                    default:  
+                        //slide.getSpTree().addNewSp().set(tsh.getXmlObject().copy());  
+                
+                }  
+        }
     }
 
     public void save(String presentationFileName) throws IOException {
@@ -103,6 +137,8 @@ public class Code2Present {
         titleShape.setText(slideTitle);
         //this is just very beginning version with only text
         contentShape.setText(content.getText());
+
+        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
     }
 
 
@@ -119,6 +155,9 @@ public class Code2Present {
         titleShape.setText(slideTitle);
         //this is just very beginning version with only text
         contentShape.setText(content.getText());
+
+        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
+
     }
 
     public void title(String thisIsTitle, String subtitleAuthorDate) {
@@ -127,11 +166,11 @@ public class Code2Present {
                     = defaultMaster.getLayout(SlideLayout.TITLE);
         }
 
-        XSLFSlide slide = p.getSlides().get(0);
-//        XSLFSlide slide = p.createSlide(titleLayout);
+        titleSlide = p.getSlides().get(0);
+//        XSLFSlide titleSlide = p.createSlide(titleLayout);
 
-        XSLFTextShape titleShape = slide.getPlaceholder(0);
-        XSLFTextShape subTitleShape = slide.getPlaceholder(1);
+        XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
+        XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);
 
         titleShape.setText(thisIsTitle);
         subTitleShape.setText(subtitleAuthorDate);

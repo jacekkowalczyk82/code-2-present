@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = "code-2-present"
-include("app")
+include("code2present")

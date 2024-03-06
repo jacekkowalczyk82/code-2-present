@@ -23,3 +23,17 @@ gradle init
 * https://poi.apache.org/components/slideshow/xslf-cookbook.html
 * 
 
+## Building and running 
+
+```
+./gradlew build 
+
+
+# generate scripts and install package
+./gradlew installDist
+
+# Running
+code2present/build/install/code2present/bin/code2present
+
+
+```
