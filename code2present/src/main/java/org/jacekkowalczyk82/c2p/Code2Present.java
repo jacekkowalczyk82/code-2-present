@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.awt.Rectangle;
 
@@ -21,7 +23,7 @@ public class Code2Present {
     private XSLFSlideMaster defaultMaster;
     private XSLFSlideLayout titleLayout;
     private XSLFSlideLayout layout;
-
+    public int slideNumber;
 
     public void fromTemplate(String templateFileName) {
         try {
@@ -100,7 +102,7 @@ public class Code2Present {
                 // these are special and not copied by default  
                     case DATETIME:  
                     case SLIDE_NUMBER:
-                    case CONTENT:  
+//                    case CONTENT:
                     case FOOTER:  
                         System.out.println("Copying placeholder : "+ ph);  
                         slide.getXmlObject().getCSld().getSpTree().addNewSp().set(shape.getXmlObject().copy());  
@@ -162,29 +164,16 @@ public class Code2Present {
             slide.removeShape(placeHold);
 
         }
-
-
-        // switch (content.getContentType()) {
-        //     case IMAGE: 
-        //         addText(contentShape, content.getText());
-        //         break; 
-        //     case UL_LIST:
-        //         addUlList(contentShape, content.getUlList());
-            
-        // }
-        
-        // //this is just very beginning version with only text
-        // // contentShape.setText();
-
-        // System.out.println("Slide placeholders after: ");
-        // for (XSLFTextShape placeHold : placeholders) {
-        //     System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
-        // }
+        this.slideNumber++;
         
     }
 
 
     public void slide(String slideTitle, Content content) {
+
+        LocalDateTime nowTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+
         if (layout == null) {
             layout
                     = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
@@ -192,12 +181,12 @@ public class Code2Present {
 
         XSLFSlide slide = p.createSlide(layout);
 
-        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
+//        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
 
         XSLFTextShape[] placeholders = slide.getPlaceholders();
         System.out.println("New Slide placeholders before: ");
         for (XSLFTextShape placeHold : placeholders) {
-            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());
             System.out.println("    ");
         }
 
@@ -209,6 +198,11 @@ public class Code2Present {
             }
         }
 
+        // for (XSLFTextShape placeHold : placeholders) {
+        //     System.out.println("    placeHold: " + shape.getShapeId() + " " + shape.getShapeName()); 
+        //     slide.removeShape(placeHold);
+
+        // }
         
         XSLFTextShape titleShape = slide.getPlaceholder(0);
         // XSLFTextShape contentShape = slide.getPlaceholder(1);
@@ -221,6 +215,11 @@ public class Code2Present {
         contentShape.setPlaceholder(Placeholder.CONTENT);
         contentShape.setAnchor(new Rectangle(50, 100, 680, 300));
 
+        XSLFTextShape footerShape = slide.createTextBox();
+        footerShape.setPlaceholder(Placeholder.FOOTER);
+        footerShape.setAnchor(new Rectangle(400, 400, 300, 40));
+
+        footerShape.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
 
         titleShape.setText(slideTitle);
 
@@ -243,6 +242,7 @@ public class Code2Present {
         for (XSLFTextShape placeHold : placeholders) {
             System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
         }
+        this.slideNumber++;
         
     }
 
@@ -320,17 +320,18 @@ public class Code2Present {
 
         titleSlide = p.getSlides().get(0);
 
-        // XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
-        // System.out.println("Title Slide placeholders before: ");
-        // for (XSLFTextShape placeHold : placeholders) {
-        //     System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
-        //     System.out.println("    ");
-        // }
+         XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
+         System.out.println("Title Slide placeholders before: ");
+         for (XSLFTextShape placeHold : placeholders) {
+             System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());
+             System.out.println("    ");
+         }
 
 
         // XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
         // XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);
 
+        
 
         XSLFTextShape titleShape = titleSlide.createTextBox();
         titleShape.setPlaceholder(Placeholder.TITLE);
@@ -344,6 +345,6 @@ public class Code2Present {
         titleShape.setText(thisIsTitle);
         subTitleShape.setText(subtitleAuthorDate);
 
-
+        this.slideNumber++;
     }
 }

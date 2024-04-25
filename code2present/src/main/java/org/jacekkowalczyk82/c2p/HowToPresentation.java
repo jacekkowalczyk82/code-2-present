@@ -26,14 +26,14 @@ public class HowToPresentation {
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
         // c2p.fromTemplate("TemplateMesh.pptx");
         // c2p.fromTemplate("TemplateCelestial.pptx");
-        // c2p.fromTemplate("Template-Libre-Lights.pptx");
-        // c2p.fromTemplate("Template-Libre-Vivid.pptx");
-        // c2p.fromTemplate("Template-Libre-Sunset.pptx");
 
         //template must be with layout empty only some background or colors no placeholders
-        c2p.fromTemplate("Template-Libre-Clean-Pencil.pptx");
-        // c2p.fromTemplate("Template-Libre-Metropolis.pptx");
-        // c2p.fromTemplate("Template-Libre-YellowIdea.pptx");
+        //use master view of slides in libre office impress
+        //but footer date time and page numbers scan be
+//        c2p.fromTemplate("Template-Libre-Clean-Pencil.pptx");
+//        c2p.fromTemplate("Template-Libre-Clean.pptx");
+        c2p.fromTemplate("Template-Libre-Clean-2.pptx");
+
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");5
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
@@ -80,9 +80,13 @@ code2present/build/install/code2present/bin/code2present
 
 ```
 
+*
          */
+
+
         c2p.title("Generate PPTX presentation from code", "Jacek Kowalczyk 2024-04-25");
-        
+
+
         c2p.slide("Setup ubuntu dev env", Content.withUlList(
             "curl -s \"https://get.sdkman.io\" | bash",
             "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"",
