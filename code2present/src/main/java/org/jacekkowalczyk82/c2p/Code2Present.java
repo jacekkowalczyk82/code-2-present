@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
+import java.awt.Rectangle;
 
 
 public class Code2Present {
@@ -48,40 +48,40 @@ public class Code2Present {
         return "Hello World!";
     }
 
-    public static void main(String[] args) {
-        Code2Present c2p = new Code2Present();
-        System.out.println(c2p.getGreeting());
+//     public static void main(String[] args) {
+//         Code2Present c2p = new Code2Present();
+//         System.out.println(c2p.getGreeting());
 
-        //code-2-present-template1.pptx
-        c2p.fromTemplate("TemplateMeshWithFooter.pptx");
-        // c2p.fromTemplate("TemplateMesh.pptx");
-        // c2p.fromTemplate("TemplateCelestial.pptx");
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+//         //code-2-present-template1.pptx
+//         c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+//         // c2p.fromTemplate("TemplateMesh.pptx");
+//         // c2p.fromTemplate("TemplateCelestial.pptx");
+//         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+//         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
 
-        c2p.title("This is Title", "Subtitle Author date");
+//         c2p.title("This is Title", "Subtitle Author date");
         
-        c2p.emptySlide();
+//         c2p.emptySlide();
 
-        c2p.slide("slide 2", Content.withText("this is a paragraph text on the slide 2"));
+//         c2p.slide("slide 2", Content.withText("this is a paragraph text on the slide 2"));
         
-       c2p.slide("slide 3", Content.withUlList(
-               "Elem 1",
-               "Elem 2", "Elemment 3 ")
-       );
+//        c2p.slide("slide 3", Content.withUlList(
+//                "Elem 1",
+//                "Elem 2", "Elemment 3 ")
+//        );
 
-//        c2p.slide("slide 3",Content.withImage("images/image1.png"));
-
-
-        try {
-            c2p.save("example-presentation.pptx");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+// //        c2p.slide("slide 3",Content.withImage("images/image1.png"));
 
 
-    }
+//         try {
+//             c2p.save("example-presentation.pptx");
+//         } catch (IOException e) {
+//             throw new RuntimeException(e);
+//         }
+
+
+//     }
 
     public void copyPlaceHoldersFromTemplate(XSLFSlide titleSlide, XSLFSlide slide) {  
   
@@ -211,7 +211,16 @@ public class Code2Present {
 
         
         XSLFTextShape titleShape = slide.getPlaceholder(0);
-        XSLFTextShape contentShape = slide.getPlaceholder(1);
+        // XSLFTextShape contentShape = slide.getPlaceholder(1);
+
+        // XSLFTextShape titleShape = slide.createTextBox();
+        // titleShape.setPlaceholder(Placeholder.TITLE);
+        // titleShape.setAnchor(new Rectangle(50, 50, 400, 100));
+
+        XSLFTextShape contentShape = slide.createTextBox();
+        contentShape.setPlaceholder(Placeholder.CONTENT);
+        contentShape.setAnchor(new Rectangle(50, 100, 680, 300));
+
 
         titleShape.setText(slideTitle);
 
@@ -279,7 +288,7 @@ public class Code2Present {
         XSLFTextRun r1 = p.addNewTextRun();
 
         r1.setText(code);
-
+        r1.setFontSize(16.0d);
         r1.setFontColor(java.awt.Color.GRAY);
    
 
@@ -310,18 +319,27 @@ public class Code2Present {
         }
 
         titleSlide = p.getSlides().get(0);
-//        XSLFSlide titleSlide = p.createSlide(titleLayout);
 
-        XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
-        System.out.println("Title Slide placeholders before: ");
-        for (XSLFTextShape placeHold : placeholders) {
-            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
-            System.out.println("    ");
-        }
+        // XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
+        // System.out.println("Title Slide placeholders before: ");
+        // for (XSLFTextShape placeHold : placeholders) {
+        //     System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+        //     System.out.println("    ");
+        // }
 
 
-        XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
-        XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);
+        // XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
+        // XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);
+
+
+        XSLFTextShape titleShape = titleSlide.createTextBox();
+        titleShape.setPlaceholder(Placeholder.TITLE);
+        titleShape.setAnchor(new Rectangle(50, 50, 600, 100));
+
+        XSLFTextShape subTitleShape = titleSlide.createTextBox();
+        subTitleShape.setPlaceholder(Placeholder.SUBTITLE);
+        subTitleShape.setAnchor(new Rectangle(200, 200, 400, 100));
+
 
         titleShape.setText(thisIsTitle);
         subTitleShape.setText(subtitleAuthorDate);

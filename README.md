@@ -21,7 +21,7 @@ gradle init
 
 * https://www.baeldung.com/apache-poi-slideshow
 * https://poi.apache.org/components/slideshow/xslf-cookbook.html
-* 
+* https://github.com/apache/poi/tree/trunk/poi-examples
 
 ## Building and running 
 

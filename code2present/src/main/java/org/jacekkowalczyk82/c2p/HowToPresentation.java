@@ -20,16 +20,21 @@ public class HowToPresentation {
 
     public static void main(String[] args) {
         Code2Present c2p = new Code2Present();
-        System.out.println("This is dummy example presentation ");
+        System.out.println("This is How To example presentation ");
 
         //code-2-present-template1.pptx
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
         // c2p.fromTemplate("TemplateMesh.pptx");
-        c2p.fromTemplate("TemplateCelestial.pptx");
+        // c2p.fromTemplate("TemplateCelestial.pptx");
         // c2p.fromTemplate("Template-Libre-Lights.pptx");
+        // c2p.fromTemplate("Template-Libre-Vivid.pptx");
+        // c2p.fromTemplate("Template-Libre-Sunset.pptx");
+
+        //template must be with layout empty only some background or colors no placeholders
+        c2p.fromTemplate("Template-Libre-Clean-Pencil.pptx");
         // c2p.fromTemplate("Template-Libre-Metropolis.pptx");
         // c2p.fromTemplate("Template-Libre-YellowIdea.pptx");
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");5
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
 
@@ -93,7 +98,7 @@ code2present/build/install/code2present/bin/code2present
         );
 
         c2p.slide("Building and running", Content.withCodeText(
-            "./gradlew build \n" + 
+            "./gradlew build \n" +
             "# generate scripts and install package \n" + 
             "./gradlew installDist \n" + 
             "# Running the default DummyPresentation \n" + 

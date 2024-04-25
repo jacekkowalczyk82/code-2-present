@@ -38,7 +38,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.jacekkowalczyk82.c2p.DummyPresentation"
+    mainClass = "org.jacekkowalczyk82.c2p.HowToPresentation"
 }
 
 tasks.named<Test>("test") {
