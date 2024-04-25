@@ -5,11 +5,11 @@ presentation:
     title: The example oresentation
     subtitle: author date
   slides: 
-    slide:
+    - slide:
       title: slide 1
       contentType: text
       content: this is example text for slide
-    slide: 
+    - slide: 
       title: slide 2
       contentType: code
       content: python --version
