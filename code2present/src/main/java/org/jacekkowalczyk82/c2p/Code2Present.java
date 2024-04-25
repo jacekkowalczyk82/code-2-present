@@ -202,6 +202,9 @@ public class Code2Present {
         titleShape.setText(slideTitle);
 
         switch (content.getContentType()) {
+            case CODE: 
+                addCodeText(contentShape, content.getText());
+                break; 
             case TEXT: 
                 addText(contentShape, content.getText());
                 break; 
@@ -249,6 +252,41 @@ public class Code2Present {
         
 
     }
+
+    private void addCodeText(XSLFTextShape contentShape, String code) {
+        contentShape.clearText();
+        // contentShape.setText("hmmmm ");
+        contentShape.getTextParagraphs().forEach(tp-> {
+            System.out.println("Empty Text Paragrapth "+ tp.getText());
+        });
+        System.out.println("Paragraphs size: "+ contentShape.getTextParagraphs().size());
+        XSLFTextParagraph p = contentShape.addNewTextParagraph();
+        p.setBullet(false);
+
+        XSLFTextRun r1 = p.addNewTextRun();
+
+        r1.setText(code);
+
+        r1.setFontColor(java.awt.Color.GRAY);
+   
+
+    }
+
+    private void addCodeText(XSLFSlide slide, String code) {
+        XSLFTextBox shape = slide.createTextBox();
+
+        XSLFTextParagraph p = shape.addNewTextParagraph();
+
+        XSLFTextRun r1 = p.addNewTextRun();
+
+        r1.setText(code);
+
+
+        r1.setFontColor(java.awt.Color.GRAY);
+   
+
+    }
+
 
 
     public void macOsSlide(String slideTitle, Content content) {

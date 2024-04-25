@@ -23,6 +23,13 @@ public class Content {
         return c;
     }
 
+    public static Content withCodeText(String code) {
+        Content c =  new Content();
+        c.text = code;
+        c.contentType = ContentType.CODE;
+        return c;
+    }
+
     // private static Content getInstance() {
     //     if (instance == null) {
     //         instance = new Content();
