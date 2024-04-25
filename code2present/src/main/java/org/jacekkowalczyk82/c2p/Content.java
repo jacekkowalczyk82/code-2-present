@@ -6,47 +6,75 @@ import java.util.stream.Collectors;
 
 public class Content {
 
-    private static Content instance;
+    // private static Content instance;
 
-    public String getText() {
-        return text;
-    }
+    
 
+    private ContentType contentType;
     private String text;
     private String image;
     private List<String> ulList;
     private List<String> liList;
 
     public static Content withText(String text) {
-        Content c =  getInstance();
+        Content c =  new Content();
         c.text = text;
+        c.contentType = ContentType.TEXT;
         return c;
     }
 
-    private static Content getInstance() {
-        if (instance == null) {
-            instance = new Content();
-        }
-        return instance;
-    }
+    // private static Content getInstance() {
+    //     if (instance == null) {
+    //         instance = new Content();
+    //     }
+    //     return instance;
+    // }
+
+
 
     public static Content withUlList(String ... listArgs) {
-        Content c =  getInstance();
+        Content c =  new Content();
+        
         List<String> list = Arrays.stream(listArgs).collect(Collectors.toList());
         c.ulList = list;
+        c.contentType = ContentType.UL_LIST;
         return c;
     }
 
     public static Content withLiList(String ... listArgs) {
-        Content c =  getInstance();
+        Content c =  new Content();
         List<String> list = Arrays.stream(listArgs).collect(Collectors.toList());
         c.liList = list;
+        c.contentType = ContentType.LI_LIST;
         return c;
     }
 
     public static Content withImage(String image) {
-        Content c =  getInstance();
+        Content c =  new Content();
         c.image = image;
+        c.contentType = ContentType.IMAGE;
         return c;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public List<String> getUlList() {
+        return ulList;
+    }
+
+    public List<String> getLiList() {
+        return liList;
+    }
+
+
 }

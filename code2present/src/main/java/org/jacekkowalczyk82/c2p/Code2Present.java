@@ -54,17 +54,23 @@ public class Code2Present {
 
         //code-2-present-template1.pptx
         c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+        // c2p.fromTemplate("TemplateMesh.pptx");
+        // c2p.fromTemplate("TemplateCelestial.pptx");
+        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
 
         c2p.title("This is Title", "Subtitle Author date");
+        
+        c2p.emptySlide();
 
         c2p.slide("slide 2", Content.withText("this is a paragraph text on the slide 2"));
         
-//        c2p.slide("slide 2", Content.withUlList(
-//                "Elem 1",
-//                "Elem 2")
-//        );
-//
+       c2p.slide("slide 3", Content.withUlList(
+               "Elem 1",
+               "Elem 2", "Elemment 3 ")
+       );
+
 //        c2p.slide("slide 3",Content.withImage("images/image1.png"));
 
 
@@ -83,7 +89,7 @@ public class Code2Present {
         for (XSLFShape shape : titleSlideShapes) {  
             Placeholder ph = shape.getPlaceholder();  
   
-                System.out.println(shape.getShapeName() + " " + shape.getPlaceholder());  
+                System.out.println("Copying from " + shape.getShapeName() + " " + shape.getPlaceholder());  
 //                ((XSLFTextShape) shape).setText("Test Text");  
   
                 if (ph == null) {  
@@ -110,6 +116,7 @@ public class Code2Present {
 
         FileOutputStream out = null;
         try {
+            System.out.println("Saving presentation to: " + presentationFileName);
             out = new FileOutputStream(presentationFileName);
             p.write(out);
 
@@ -124,6 +131,55 @@ public class Code2Present {
 
     }
 
+    public void emptySlide() {
+        if (layout == null) {
+            layout
+                    = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
+        }
+
+        XSLFSlide slide = p.createSlide(layout);
+
+        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
+
+        XSLFTextShape[] placeholders = slide.getPlaceholders();
+        // System.out.println("New Slide placeholders before: ");
+        // for (XSLFTextShape placeHold : placeholders) {
+        //     System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+        //     System.out.println("    ");
+        // }
+        
+        // XSLFTextShape titleShape = slide.getPlaceholder(0);
+        // XSLFTextShape contentShape = slide.getPlaceholder(1);
+
+        // titleShape.setText("");
+        // contentShape.clearText();
+
+        for (XSLFTextShape placeHold : placeholders) {
+            slide.removeShape(placeHold);
+
+        }
+
+
+        // switch (content.getContentType()) {
+        //     case IMAGE: 
+        //         addText(contentShape, content.getText());
+        //         break; 
+        //     case UL_LIST:
+        //         addUlList(contentShape, content.getUlList());
+            
+        // }
+        
+        // //this is just very beginning version with only text
+        // // contentShape.setText();
+
+        // System.out.println("Slide placeholders after: ");
+        // for (XSLFTextShape placeHold : placeholders) {
+        //     System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+        // }
+        
+    }
+
+
     public void slide(String slideTitle, Content content) {
         if (layout == null) {
             layout
@@ -131,14 +187,67 @@ public class Code2Present {
         }
 
         XSLFSlide slide = p.createSlide(layout);
+
+        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
+
+        XSLFTextShape[] placeholders = slide.getPlaceholders();
+        System.out.println("New Slide placeholders before: ");
+        for (XSLFTextShape placeHold : placeholders) {
+            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+            System.out.println("    ");
+        }
         XSLFTextShape titleShape = slide.getPlaceholder(0);
         XSLFTextShape contentShape = slide.getPlaceholder(1);
 
         titleShape.setText(slideTitle);
-        //this is just very beginning version with only text
-        contentShape.setText(content.getText());
 
-        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
+        switch (content.getContentType()) {
+            case TEXT: 
+                addText(contentShape, content.getText());
+                break; 
+            case UL_LIST:
+                addUlList(contentShape, content.getUlList());
+            
+        }
+        
+        //this is just very beginning version with only text
+        // contentShape.setText();
+
+        System.out.println("Slide placeholders after: ");
+        for (XSLFTextShape placeHold : placeholders) {
+            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+        }
+        
+    }
+
+
+    private void addUlList(XSLFTextShape contentShape, List<String> ulList) {
+        contentShape.clearText();
+
+        
+        ulList.forEach(item -> {
+            XSLFTextParagraph p1 = contentShape.addNewTextParagraph();
+        
+            p1.setIndentLevel(0);
+            p1.setBullet(true);
+
+            XSLFTextRun r1 = p1.addNewTextRun();
+            r1 = p1.addNewTextRun();
+            r1.setText(item);
+        });
+        
+    }
+
+
+    private void addText(XSLFTextShape contentShape, String text) {
+        System.out.println("Old shape     " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText()); 
+        
+        contentShape.clearText();
+        contentShape.setText(text);
+
+        System.out.println("New shape TEXT    " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText()); 
+        
+
     }
 
 
