@@ -33,7 +33,7 @@ public class Code2Present {
             System.out.println("Available slide layouts:");
             for(XSLFSlideMaster master : p.getSlideMasters()){
                 for(XSLFSlideLayout layout : master.getSlideLayouts()){
-                    System.out.println(layout.getType());
+                    System.out.println("    "+ layout.getType());
                 }
             }
 
@@ -99,7 +99,8 @@ public class Code2Present {
                 switch (ph) {  
                 // these are special and not copied by default  
                     case DATETIME:  
-                    case SLIDE_NUMBER:  
+                    case SLIDE_NUMBER:
+                    case CONTENT:  
                     case FOOTER:  
                         System.out.println("Copying placeholder : "+ ph);  
                         slide.getXmlObject().getCSld().getSpTree().addNewSp().set(shape.getXmlObject().copy());  
@@ -107,6 +108,9 @@ public class Code2Present {
                     
                     default:  
                         //slide.getSpTree().addNewSp().set(tsh.getXmlObject().copy());  
+                        // System.out.println("Copying placeholder : "+ ph);  
+                        // slide.getXmlObject().getCSld().getSpTree().addNewSp().set(shape.getXmlObject().copy());  
+
                 
                 }  
         }
@@ -196,6 +200,16 @@ public class Code2Present {
             System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
             System.out.println("    ");
         }
+
+
+        for (XSLFShape shape : slide.getShapes()) {
+            if (shape instanceof XSLFAutoShape) {
+                // this is a template placeholder
+                System.out.println("    AUTO Shape: " + shape.getShapeId() + " " + shape.getShapeName()); 
+            }
+        }
+
+        
         XSLFTextShape titleShape = slide.getPlaceholder(0);
         XSLFTextShape contentShape = slide.getPlaceholder(1);
 
@@ -235,7 +249,6 @@ public class Code2Present {
             p1.setBullet(true);
 
             XSLFTextRun r1 = p1.addNewTextRun();
-            r1 = p1.addNewTextRun();
             r1.setText(item);
         });
         
@@ -272,23 +285,6 @@ public class Code2Present {
 
     }
 
-    private void addCodeText(XSLFSlide slide, String code) {
-        XSLFTextBox shape = slide.createTextBox();
-
-        XSLFTextParagraph p = shape.addNewTextParagraph();
-
-        XSLFTextRun r1 = p.addNewTextRun();
-
-        r1.setText(code);
-
-
-        r1.setFontColor(java.awt.Color.GRAY);
-   
-
-    }
-
-
-
     public void macOsSlide(String slideTitle, Content content) {
         if (layout == null) {
             layout
@@ -315,6 +311,14 @@ public class Code2Present {
 
         titleSlide = p.getSlides().get(0);
 //        XSLFSlide titleSlide = p.createSlide(titleLayout);
+
+        XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
+        System.out.println("Title Slide placeholders before: ");
+        for (XSLFTextShape placeHold : placeholders) {
+            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());  
+            System.out.println("    ");
+        }
+
 
         XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
         XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);

@@ -20,12 +20,15 @@ public class HowToPresentation {
 
     public static void main(String[] args) {
         Code2Present c2p = new Code2Present();
-        System.out.println("This is dummy exmaple presentation ");
+        System.out.println("This is dummy example presentation ");
 
         //code-2-present-template1.pptx
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
         // c2p.fromTemplate("TemplateMesh.pptx");
         c2p.fromTemplate("TemplateCelestial.pptx");
+        // c2p.fromTemplate("Template-Libre-Lights.pptx");
+        // c2p.fromTemplate("Template-Libre-Metropolis.pptx");
+        // c2p.fromTemplate("Template-Libre-YellowIdea.pptx");
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
         // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
 
