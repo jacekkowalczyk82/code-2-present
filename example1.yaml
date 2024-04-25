@@ -12,4 +12,8 @@ presentation:
     - slide: 
       title: slide 2
       contentType: code
-      content: python --version
+      content: |
+        python --version 
+        ls -alh 
+        pwd
+
