@@ -14,6 +14,9 @@
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		  <jackson-version>2.16.2</jackson-version>
+		  <jackson-databind-version>2.16.2</jackson-databind-version>
+		  <jackson-databind-nullable-version>0.2.1</jackson-databind-nullable-version>
 
       </properties>
      
@@ -81,6 +84,43 @@
 			<version>2.23.0</version>
 		</dependency>
 
+
+		  <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		  <dependency>
+			  <groupId>com.fasterxml.jackson.core</groupId>
+			  <artifactId>jackson-core</artifactId>
+			  <version>${jackson-version}</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>com.fasterxml.jackson.core</groupId>
+			  <artifactId>jackson-databind</artifactId>
+			  <version>${jackson-version}</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>com.fasterxml.jackson.core</groupId>
+			  <artifactId>jackson-annotations</artifactId>
+			  <version>${jackson-version}</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>org.openapitools</groupId>
+			  <artifactId>jackson-databind-nullable</artifactId>
+			  <version>${jackson-databind-nullable-version}</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>com.fasterxml.jackson.datatype</groupId>
+			  <artifactId>jackson-datatype-jsr310</artifactId>
+			  <version>${jackson-version}</version>
+		  </dependency>
+
+		  <dependency>
+			  <groupId>com.fasterxml.jackson.datatype</groupId>
+			  <artifactId>jackson-datatype-joda</artifactId>
+			  <version>${jackson-version}</version>
+		  </dependency>
 
 
       </dependencies>

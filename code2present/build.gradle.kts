@@ -27,6 +27,15 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.logging.log4j:log4j-api:2.23.0")
     implementation("org.apache.logging.log4j:log4j-core:2.23.0")
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation("com.fasterxml.jackson.core:jackson-core:2.16.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.16.2")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.16.2")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

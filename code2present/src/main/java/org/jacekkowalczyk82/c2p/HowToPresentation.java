@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-
 public class HowToPresentation {
-
 
 
     public static void main(String[] args) {
@@ -88,50 +86,51 @@ code2present/build/install/code2present/bin/code2present
 
 
         c2p.slide("Setup ubuntu dev env", Content.withUlList(
-            "curl -s \"https://get.sdkman.io\" | bash",
-            "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"",
-            "sdk install gradle",
-            "sdk install java 11.0.22-tem",
-            "gradle init")
+                "curl -s \"https://get.sdkman.io\" | bash",
+                "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"",
+                "sdk install gradle",
+                "sdk install java 11.0.22-tem",
+                "gradle init"), FontInfo.withFontSize(14.0d)
         );
 
         c2p.slide("knowledge and links", Content.withUlList(
-            "https://www.baeldung.com/apache-poi-slideshow",
-            "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", 
-            "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java")
+                        "https://www.baeldung.com/apache-poi-slideshow",
+                        "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html",
+                        "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java"),
+                FontInfo.withFontSize(14.0d)
         );
 
         c2p.slide("Building and running", Content.withCodeText(
-            "./gradlew build \n" +
-            "# generate scripts and install package \n" + 
-            "./gradlew installDist \n" + 
-            "# Running the default DummyPresentation \n" + 
-            "code2present/build/install/code2present/bin/code2present")
+                "./gradlew build \n" +
+                        "# generate scripts and install package \n" +
+                        "./gradlew installDist \n" +
+                        "# Running the default DummyPresentation \n" +
+                        "code2present/build/install/code2present/bin/code2present"), FontInfo.withFontSize(14.0d)
         );
 
         c2p.emptySlide();
 
         c2p.slide("Slide with CODE", Content.withCodeText("// Your First Program \n" +
-        "\n" +
-        "class HelloWorld { \n" +
-        "    public static void main(String[] args) { \n" +
-        "        System.out.println(\"Hello, World!\");  \n" +
-        "    } \n" +
-        "} \n"));
+                "\n" +
+                "class HelloWorld { \n" +
+                "    public static void main(String[] args) { \n" +
+                "        System.out.println(\"Hello, World!\");  \n" +
+                "    } \n" +
+                "} \n"), FontInfo.withFontSize(14.0d));
 
-        c2p.slide("Slide with Text", Content.withText("this is a paragraph text on the slide 2"));
-        
+        c2p.slide("Slide with Text", Content.withText("this is a paragraph text on the slide 2"), FontInfo.withFontSize(14.0d));
+
         c2p.slide("Slide with Bullet List", Content.withUlList(
-               "Element 1 ",
-               "Element 2", 
-               "Element 3")
+                "Element 1 ",
+                "Element 2",
+                "Element 3"), FontInfo.withFontSize(14.0d)
         );
 
-        c2p.slide("You can have empty slides", Content.withText("The next slide will be empty"));
+        c2p.slide("You can have empty slides", Content.withText("The next slide will be empty"), FontInfo.withFontSize(14.0d));
         c2p.emptySlide();
 
 
-//        c2p.slide("slide 3",Content.withImage("images/image1.png"));
+//        c2p.slide("slide 3",Content.withImage("images/image1.png"), FontInfo.withFontSize(14.0d));
 
 
         try {
@@ -143,5 +142,5 @@ code2present/build/install/code2present/bin/code2present
 
     }
 
-    
+
 }
