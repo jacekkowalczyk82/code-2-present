@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import org.apache.commons.io.FileUtils;
+import org.jacekkowalczyk82.c2p.model.Presentation;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class YAMLTools {
+public class JSONTools {
 
     private static ObjectMapper jsonMapper;
 
@@ -59,6 +60,20 @@ public class YAMLTools {
             e.printStackTrace();
         }
     }
+
+    public static void writePresentationToJsonFile(Presentation presentation, String filePath) {
+        try {
+            ObjectWriter ow = jsonMapper.writer().withDefaultPrettyPrinter();
+            String prettyJson = ow.writeValueAsString(presentation);
+
+            FileUtils.writeStringToFile(new File(filePath), prettyJson, Charset.forName("UTF-8"));
+
+        } catch (Exception e) {
+            String failMsg = "Failed to create json or save to file";
+            e.printStackTrace();
+        }
+    }
+
 
 
     public static String getObjectAsJsonString(Map<String, Object> objectMap) {

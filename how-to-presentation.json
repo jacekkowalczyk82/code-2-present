@@ -1,0 +1,149 @@
+{
+  "configuration" : {
+    "fromTemplate" : "Template-Libre-Clean-Yellow-Gradient.pptx",
+    "targetPresentationFile" : "HowTo-presentation.pptx",
+    "footerTemplate" : "%s         JacekKowalczyk82.org               %d",
+    "titleRectangle" : {
+      "x" : 50,
+      "y" : 50,
+      "width" : 700,
+      "height" : 100
+    },
+    "subTitleRectangle" : {
+      "x" : 250,
+      "y" : 300,
+      "width" : 500,
+      "height" : 100
+    },
+    "slideTitleRectangle" : {
+      "x" : 50,
+      "y" : 30,
+      "width" : 700,
+      "height" : 80
+    },
+    "slideContentRectangle" : {
+      "x" : 50,
+      "y" : 100,
+      "width" : 680,
+      "height" : 300
+    },
+    "slideFooterRectangle" : {
+      "x" : 450,
+      "y" : 400,
+      "width" : 300,
+      "height" : 40
+    },
+    "footerFontInfo" : {
+      "fontSize" : 14.0
+    }
+  },
+  "titleSlide" : {
+    "title" : "Generate PPTX presentation from code",
+    "subTitle" : "Jacek Kowalczyk 2024-04-25"
+  },
+  "slides" : [ {
+    "slideTitle" : "Setup ubuntu dev env",
+    "content" : {
+      "contentType" : "UL_LIST",
+      "text" : null,
+      "image" : null,
+      "ulList" : [ "curl -s \"https://get.sdkman.io\" | bash", "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"", "sdk install gradle", "sdk install java 11.0.22-tem", "gradle init" ],
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "knowledge and links",
+    "content" : {
+      "contentType" : "UL_LIST",
+      "text" : null,
+      "image" : null,
+      "ulList" : [ "https://www.baeldung.com/apache-poi-slideshow", "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java" ],
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "Building and running",
+    "content" : {
+      "contentType" : "CODE",
+      "text" : "./gradlew build \n# generate scripts and install package \n./gradlew installDist \n# Running the default DummyPresentation \ncode2present/build/install/code2present/bin/code2present",
+      "image" : null,
+      "ulList" : null,
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : null,
+    "content" : null,
+    "contentFontInfo" : null
+  }, {
+    "slideTitle" : "Slide with CODE",
+    "content" : {
+      "contentType" : "CODE",
+      "text" : "// Your First Program \n\nclass HelloWorld { \n    public static void main(String[] args) { \n        System.out.println(\"Hello, World!\");  \n    } \n} \n",
+      "image" : null,
+      "ulList" : null,
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "Slide with Text",
+    "content" : {
+      "contentType" : "TEXT",
+      "text" : "this is a paragraph text on the slide 2",
+      "image" : null,
+      "ulList" : null,
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "Slide with Bullet List",
+    "content" : {
+      "contentType" : "UL_LIST",
+      "text" : null,
+      "image" : null,
+      "ulList" : [ "Element 1 ", "Element 2", "Element 3" ],
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "Slide with Numbered List",
+    "content" : {
+      "contentType" : "LI_LIST",
+      "text" : null,
+      "image" : null,
+      "ulList" : null,
+      "liList" : [ "Element 1 ", "Element 2", "Element 3" ]
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "You can have empty slides",
+    "content" : {
+      "contentType" : "TEXT",
+      "text" : "The next slide will be empty",
+      "image" : null,
+      "ulList" : null,
+      "liList" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : null,
+    "content" : null,
+    "contentFontInfo" : null
+  } ]
+}

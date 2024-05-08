@@ -3,8 +3,12 @@
  */
 package org.jacekkowalczyk82.c2p;
 
+import org.apache.poi.sl.usermodel.AutoNumberingScheme;
 import org.apache.poi.sl.usermodel.Placeholder;
 import org.apache.poi.xslf.usermodel.*;
+import org.jacekkowalczyk82.c2p.model.Content;
+import org.jacekkowalczyk82.c2p.model.FontInfo;
+import org.jacekkowalczyk82.c2p.model.Slide;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +28,63 @@ public class Code2Present {
     private XSLFSlideLayout titleLayout;
     private XSLFSlideLayout layout;
     public int slideNumber;
+    private String targetPresentationFileName;
+
+    private Rectangle titleRectangle;
+    private Rectangle subTitleRectangle;
+
+    private Rectangle slideTitleRectangle;
+    private Rectangle slideContentRectangle;
+    private Rectangle slideFooterRectangle;
+    private FontInfo footerFontInfo;
+
+    public FontInfo getFooterFontInfo() {
+        return footerFontInfo;
+    }
+
+    public void setFooterFontInfo(FontInfo footerFontInfo) {
+        this.footerFontInfo = footerFontInfo;
+    }
+
+    public Rectangle getSlideContentRectangle() {
+        return slideContentRectangle;
+    }
+
+    public void setSlideContentRectangle(Rectangle slideContentRectangle) {
+        this.slideContentRectangle = slideContentRectangle;
+    }
+
+    public Rectangle getSlideFooterRectangle() {
+        return slideFooterRectangle;
+    }
+
+    public void setSlideFooterRectangle(Rectangle slideFooterRectangle) {
+        this.slideFooterRectangle = slideFooterRectangle;
+    }
+
+    public Rectangle getSlideTitleRectangle() {
+        return slideTitleRectangle;
+    }
+
+    public void setSlideTitleRectangle(Rectangle slideTitleRectangle) {
+        this.slideTitleRectangle = slideTitleRectangle;
+    }
+
+    public Rectangle getSubTitleRectangle() {
+        return subTitleRectangle;
+    }
+
+    public void setSubTitleRectangle(Rectangle subTitleRectangle) {
+        this.subTitleRectangle = subTitleRectangle;
+    }
+
+    public Rectangle getTitleRectangle() {
+        return titleRectangle;
+    }
+
+    public void setTitleRectangle(Rectangle titleRectangle) {
+        this.titleRectangle = titleRectangle;
+    }
 
     public void fromTemplate(String templateFileName) {
         try {
@@ -118,12 +179,12 @@ public class Code2Present {
         }
     }
 
-    public void save(String presentationFileName) throws IOException {
+    public void save() throws IOException {
 
         FileOutputStream out = null;
         try {
-            System.out.println("Saving presentation to: " + presentationFileName);
-            out = new FileOutputStream(presentationFileName);
+            System.out.println("Saving presentation to: " + targetPresentationFileName);
+            out = new FileOutputStream(targetPresentationFileName);
             p.write(out);
 
         } catch (FileNotFoundException e) {
@@ -171,6 +232,7 @@ public class Code2Present {
 
     public void slide(String slideTitle, Content content, FontInfo fontInfo) {
 
+
         LocalDateTime nowTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
 
@@ -199,7 +261,7 @@ public class Code2Present {
 //        }
 
          for (XSLFTextShape placeHold : placeholders) {
-             System.out.println("    Remnoving placeHold: " + placeHold.getShapeId() + " " + placeHold.getShapeName());
+             System.out.println("    Removing placeHold: " + placeHold.getShapeId() + " " + placeHold.getShapeName());
              slide.removeShape(placeHold);
 
          }
@@ -207,19 +269,30 @@ public class Code2Present {
 //        XSLFTextShape titleShape = slide.getPlaceholder(0);
         // XSLFTextShape contentShape = slide.getPlaceholder(1);
 
-         XSLFTextShape titleShape = slide.createTextBox();
-         titleShape.setPlaceholder(Placeholder.TITLE);
-         titleShape.setAnchor(new Rectangle(50, 30, 700, 80));
+        XSLFTextShape titleShape = slide.createTextBox();
+        titleShape.setPlaceholder(Placeholder.TITLE);
+        titleShape.setAnchor(this.getSlideTitleRectangle());
 
         XSLFTextShape contentShape = slide.createTextBox();
         contentShape.setPlaceholder(Placeholder.CONTENT);
-        contentShape.setAnchor(new Rectangle(50, 100, 680, 300));
+        contentShape.setAnchor(this.getSlideContentRectangle());
 
         XSLFTextShape footerShape = slide.createTextBox();
         footerShape.setPlaceholder(Placeholder.FOOTER);
-        footerShape.setAnchor(new Rectangle(400, 400, 300, 40));
+        footerShape.setAnchor(this.getSlideFooterRectangle());
 
-        footerShape.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
+        XSLFTextParagraph footerParagrapth = footerShape.addNewTextParagraph();
+//        XSLFTextParagraph footerParagrapth = footerShape.getTextParagraphs().get(0);
+
+        footerParagrapth.setIndentLevel(0);
+        footerParagrapth.setBullet(false);
+
+        XSLFTextRun footerRun1 = footerParagrapth.addNewTextRun();
+        footerRun1.setFontSize(this.getFooterFontInfo().getFontSize());
+        footerRun1.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
+
+
+//        footerShape.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
 
         titleShape.setText(slideTitle);
 
@@ -232,6 +305,10 @@ public class Code2Present {
                 break; 
             case UL_LIST:
                 addUlList(contentShape, content.getUlList(), fontInfo);
+                break;
+            case LI_LIST:
+                addLiList(contentShape, content.getLiList(), fontInfo);
+                break;
             
         }
         
@@ -264,6 +341,25 @@ public class Code2Present {
         
     }
 
+
+    private void addLiList(XSLFTextShape contentShape, List<String> liList, FontInfo fontInfo) {
+        contentShape.clearText();
+        int counter = 0;
+
+        for (String item : liList) {
+            counter++;
+            XSLFTextParagraph p1 = contentShape.addNewTextParagraph();
+
+            p1.setIndentLevel(0);
+            p1.setBullet(false);
+            p1.setBulletAutoNumber(AutoNumberingScheme.arabicParenRight, counter);
+
+            XSLFTextRun r1 = p1.addNewTextRun();
+            r1.setFontSize(fontInfo.getFontSize());
+            r1.setText(item);
+        };
+
+    }
 
     private void addText(XSLFTextShape contentShape, String text, FontInfo fontInfo) {
         System.out.println("Old shape     " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText()); 
@@ -329,31 +425,40 @@ public class Code2Present {
 
         titleSlide = p.getSlides().get(0);
 
-         XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
-         System.out.println("Title Slide placeholders before: ");
-         for (XSLFTextShape placeHold : placeholders) {
-             System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());
-             System.out.println("    ");
-         }
+        XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
+        System.out.println("Title Slide placeholders before: ");
+        for (XSLFTextShape placeHold : placeholders) {
+            System.out.println("    " + placeHold.getShapeId() + " " + placeHold.getShapeName() + " - " + placeHold.getText());
+            System.out.println("    ");
+        }
 
 
         // XSLFTextShape titleShape = titleSlide.getPlaceholder(0);
         // XSLFTextShape subTitleShape = titleSlide.getPlaceholder(1);
 
-        
+
 
         XSLFTextShape titleShape = titleSlide.createTextBox();
         titleShape.setPlaceholder(Placeholder.TITLE);
-        titleShape.setAnchor(new Rectangle(50, 50, 700, 100));
+        titleShape.setAnchor(this.getTitleRectangle());
 
         XSLFTextShape subTitleShape = titleSlide.createTextBox();
         subTitleShape.setPlaceholder(Placeholder.SUBTITLE);
-        subTitleShape.setAnchor(new Rectangle(200, 200, 500, 100));
+        subTitleShape.setAnchor(this.getSubTitleRectangle());
 
 
         titleShape.setText(thisIsTitle);
         subTitleShape.setText(subtitleAuthorDate);
 
         this.slideNumber++;
+    }
+
+//    public void title(String thisIsTitle, String subtitleAuthorDate) {
+//        title(thisIsTitle, new Rectangle(50, 50, 700, 100), subtitleAuthorDate, new Rectangle(200, 200, 500, 100));
+//
+//    }
+
+    public void toPresentation(String targetPresentationFileName) {
+        this.targetPresentationFileName = targetPresentationFileName;
     }
 }

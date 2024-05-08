@@ -1,4 +1,4 @@
-package org.jacekkowalczyk82.c2p;
+package org.jacekkowalczyk82.c2p.model;
 
 import java.util.Arrays;
 import java.util.List;
