@@ -5,7 +5,6 @@ package org.jacekkowalczyk82.c2p;
 
 import org.jacekkowalczyk82.c2p.model.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,34 +14,16 @@ public class HowToPresentationWithModel {
 
 
     public static void main(String[] args) {
-        Code2Present c2p = new Code2Present();
-        System.out.println("This is How To example presentation ");
-
-        //code-2-present-template1.pptx
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
-        // c2p.fromTemplate("TemplateMesh.pptx");
-        // c2p.fromTemplate("TemplateCelestial.pptx");
-
-        //template must be with layout empty only some background or colors no placeholders
-        //use master view of slides in libre office impress
-        //but footer date time and page numbers scan be
-//        c2p.fromTemplate("Template-Libre-Clean-Pencil.pptx");
-//        c2p.fromTemplate("Template-Libre-Clean.pptx");
-        c2p.fromTemplate("Template-Libre-Clean-Yellow-Gradient.pptx");
-        c2p.toPresentation("HowTo-presentation.pptx");
-        c2p.setTitleRectangle(new Rectangle(50, 50, 700, 100));
-        c2p.setSubTitleRectangle(new Rectangle(250, 300, 500, 100));
-
-        c2p.setSlideTitleRectangle(new Rectangle(50, 30, 700, 80));
-        c2p.setSlideContentRectangle(new Rectangle(50, 100, 680, 300));
-        c2p.setSlideFooterRectangle(new Rectangle(450, 400, 300, 40));
-        c2p.setFooterFontInfo(FontInfo.withFontSize(14.0d));
 
 
         Presentation pres = new Presentation();
         Configuration config = new Configuration();
+
+        //template must be with layout empty only some background or colors no placeholders
+        //use master view of slides in libre office impress
+        //but footer date time and page numbers scan be
         config.setFromTemplate("Template-Libre-Clean-Yellow-Gradient.pptx");
-        config.setTargetPresentationFile("HowTo-presentation.pptx");
+        config.setTargetPresentationFile("HowTo-presentation-with-Model.pptx");
         config.setTitleRectangle(new PlaceHolderRectangle(50, 50, 700, 100));
         config.setSubTitleRectangle(new PlaceHolderRectangle(250, 300, 500, 100));
 
@@ -117,21 +98,31 @@ public class HowToPresentationWithModel {
 
         JSONTools.writePresentationToJsonFile(pres, "how-to-presentation.json");
 
-//
-//        XSLFTextShape titleShape = slide.createTextBox();
-//        titleShape.setPlaceholder(Placeholder.TITLE);
-//        titleShape.setAnchor(new Rectangle(50, 30, 700, 80));
-//
-//        XSLFTextShape contentShape = slide.createTextBox();
-//        contentShape.setPlaceholder(Placeholder.CONTENT);
-//        contentShape.setAnchor(new Rectangle(50, 100, 680, 300));
-//
-//        XSLFTextShape footerShape = slide.createTextBox();
-//        footerShape.setPlaceholder(Placeholder.FOOTER);
-//        footerShape.setAnchor(new Rectangle(400, 400, 300, 40));
 
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");5
-        // c2p.fromTemplate("TemplateMeshWithFooter.pptx");
+        Code2Present c2p = new Code2Present();
+        System.out.println("This is How To example presentation ");
+
+        c2p.fromTemplate(pres.getConfiguration().getFromTemplate());
+        c2p.toPresentation(pres.getConfiguration().getTargetPresentationFile());
+        c2p.setTitleRectangle(pres.getConfiguration().getTitleRectangle().toAWTRectangle());
+        c2p.setSubTitleRectangle(pres.getConfiguration().getSubTitleRectangle().toAWTRectangle());
+
+        c2p.setSlideTitleRectangle(pres.getConfiguration().getSlideTitleRectangle().toAWTRectangle());
+        c2p.setSlideContentRectangle(pres.getConfiguration().getSlideContentRectangle().toAWTRectangle());
+        c2p.setSlideFooterRectangle(pres.getConfiguration().getSlideFooterRectangle().toAWTRectangle());
+        c2p.setFooterFontInfo(pres.getConfiguration().getFooterFontInfo());
+
+        c2p.title(pres.getTitleSlide().getTitle(), pres.getTitleSlide().getSubTitle());
+
+        for (Slide s: pres.getSlides()) {
+            c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentFontInfo());
+        }
+
+        try {
+            c2p.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
 

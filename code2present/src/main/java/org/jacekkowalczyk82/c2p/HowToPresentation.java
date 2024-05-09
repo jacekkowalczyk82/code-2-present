@@ -103,7 +103,7 @@ code2present/build/install/code2present/bin/code2present
         c2p.title("Generate PPTX presentation from code", "Jacek Kowalczyk 2024-04-25");
 
 
-        c2p.slide("Setup ubuntu dev env", Content.withUlList(
+        c2p.slideWithContent("Setup ubuntu dev env", Content.withUlList(
                 "curl -s \"https://get.sdkman.io\" | bash",
                 "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"",
                 "sdk install gradle",
@@ -111,14 +111,14 @@ code2present/build/install/code2present/bin/code2present
                 "gradle init"), FontInfo.withFontSize(18.0d)
         );
 
-        c2p.slide("knowledge and links", Content.withUlList(
+        c2p.slideWithContent("knowledge and links", Content.withUlList(
                         "https://www.baeldung.com/apache-poi-slideshow",
                         "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html",
                         "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java"),
                 FontInfo.withFontSize(18.0d)
         );
 
-        c2p.slide("Building and running", Content.withCodeText(
+        c2p.slideWithContent("Building and running", Content.withCodeText(
                 "./gradlew build \n" +
                         "# generate scripts and install package \n" +
                         "./gradlew installDist \n" +
@@ -128,7 +128,7 @@ code2present/build/install/code2present/bin/code2present
 
         c2p.emptySlide();
 
-        c2p.slide("Slide with CODE", Content.withCodeText("// Your First Program \n" +
+        c2p.slideWithContent("Slide with CODE", Content.withCodeText("// Your First Program \n" +
                 "\n" +
                 "class HelloWorld { \n" +
                 "    public static void main(String[] args) { \n" +
@@ -136,22 +136,22 @@ code2present/build/install/code2present/bin/code2present
                 "    } \n" +
                 "} \n"), FontInfo.withFontSize(18.0d));
 
-        c2p.slide("Slide with Text", Content.withText("this is a paragraph text on the slide 2"), FontInfo.withFontSize(18.0d));
+        c2p.slideWithContent("Slide with Text", Content.withText("this is a paragraph text on the slide 2"), FontInfo.withFontSize(18.0d));
 
-        c2p.slide("Slide with Bullet List", Content.withUlList(
+        c2p.slideWithContent("Slide with Bullet List", Content.withUlList(
                 "Element 1 ",
                 "Element 2",
                 "Element 3"), FontInfo.withFontSize(18.0d)
         );
 
-        c2p.slide("Slide with Numbered List", Content.withLiList(
+        c2p.slideWithContent("Slide with Numbered List", Content.withLiList(
                 "Element 1 ",
                 "Element 2",
                 "Element 3"), FontInfo.withFontSize(18.0d)
         );
 
 
-        c2p.slide("You can have empty slides", Content.withText("The next slide will be empty"), FontInfo.withFontSize(18.0d));
+        c2p.slideWithContent("You can have empty slides", Content.withText("The next slide will be empty"), FontInfo.withFontSize(18.0d));
         c2p.emptySlide();
 
 

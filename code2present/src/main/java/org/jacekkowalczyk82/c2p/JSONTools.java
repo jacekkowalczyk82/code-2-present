@@ -35,9 +35,27 @@ public class JSONTools {
         try {
             InputStream is = new FileInputStream(new File(filePath));
 
-            testData = jsonMapper.readValue(is, HashMap.class);
+            testData = (Map) jsonMapper.readValue(is, HashMap.class);
 
             return testData;
+
+        } catch (Exception e) {
+            String errMessage = "Failed to read data from file: " + filePath;
+            e.printStackTrace();
+            throw new RuntimeException(errMessage);
+        }
+
+    }
+
+    public static Presentation readJSONToPresentation(String filePath) {
+
+        Presentation objectPresentation;
+        try {
+            InputStream is = new FileInputStream(new File(filePath));
+
+            objectPresentation = (Presentation) jsonMapper.readValue(is, Presentation.class);
+
+            return objectPresentation;
 
         } catch (Exception e) {
             String errMessage = "Failed to read data from file: " + filePath;

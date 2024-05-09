@@ -1,7 +1,7 @@
 {
   "configuration" : {
     "fromTemplate" : "Template-Libre-Clean-Yellow-Gradient.pptx",
-    "targetPresentationFile" : "HowTo-presentation-with-Model.pptx",
+    "targetPresentationFile" : "HowTo-presentation-From JSON Input.pptx",
     "footerTemplate" : "%s         JacekKowalczyk82.org               %d",
     "titleRectangle" : {
       "x" : 50,
@@ -38,8 +38,8 @@
     }
   },
   "titleSlide" : {
-    "title" : "Generate PPTX presentation from code",
-    "subTitle" : "Jacek Kowalczyk 2024-04-25"
+    "title" : "Generate PPTX presentation from JSON",
+    "subTitle" : "Jacek Kowalczyk 2024-05-09"
   },
   "slides" : [ {
     "slideTitle" : "Setup ubuntu dev env",

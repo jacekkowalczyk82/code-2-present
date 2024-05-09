@@ -1,5 +1,7 @@
 package org.jacekkowalczyk82.c2p.model;
 
+import java.awt.*;
+
 public class PlaceHolderRectangle {
     private int x;
     private int y;
@@ -13,8 +15,16 @@ public class PlaceHolderRectangle {
         this.height = height;
     }
 
+    public PlaceHolderRectangle() {
+
+    }
+
     public int getX() {
         return x;
+    }
+
+    public Rectangle toAWTRectangle() {
+        return new Rectangle(x, y, width, height) ;
     }
 
     public void setX(int x) {

@@ -47,7 +47,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.jacekkowalczyk82.c2p.HowToPresentation"
+    mainClass = "org.jacekkowalczyk82.c2p.JSON2Presentation"
 }
 
 tasks.named<Test>("test") {

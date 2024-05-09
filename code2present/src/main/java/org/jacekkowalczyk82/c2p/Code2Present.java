@@ -8,7 +8,6 @@ import org.apache.poi.sl.usermodel.Placeholder;
 import org.apache.poi.xslf.usermodel.*;
 import org.jacekkowalczyk82.c2p.model.Content;
 import org.jacekkowalczyk82.c2p.model.FontInfo;
-import org.jacekkowalczyk82.c2p.model.Slide;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -229,8 +228,15 @@ public class Code2Present {
         
     }
 
+    public void slide(String slideTitle, Content content, FontInfo fontInfo){
+        if (content == null ) {
+            emptySlide();
+        } else {
+            slideWithContent(slideTitle, content, fontInfo);
+        }
+    }
 
-    public void slide(String slideTitle, Content content, FontInfo fontInfo) {
+    public void slideWithContent(String slideTitle, Content content, FontInfo fontInfo) {
 
 
         LocalDateTime nowTime = LocalDateTime.now();
