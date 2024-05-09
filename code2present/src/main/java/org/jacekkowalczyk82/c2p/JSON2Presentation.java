@@ -20,7 +20,7 @@ public class JSON2Presentation {
 
 
             Code2Present c2p = new Code2Present();
-            System.out.println("This is How To example presentation ");
+            System.out.println("Generating presentation "+ pres.getConfiguration().getTargetPresentationFile());
 
             c2p.fromTemplate(pres.getConfiguration().getFromTemplate());
             c2p.toPresentation(pres.getConfiguration().getTargetPresentationFile());

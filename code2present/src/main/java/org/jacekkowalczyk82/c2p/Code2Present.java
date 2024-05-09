@@ -374,8 +374,9 @@ public class Code2Present {
         ulList.forEach(item -> {
             XSLFTextParagraph p1 = contentShape.addNewTextParagraph();
         
-            p1.setIndentLevel(0);
+            p1.setIndentLevel(1);
             p1.setBullet(true);
+            p1.setBulletCharacter("* ");
 
             XSLFTextRun r1 = p1.addNewTextRun();
             r1.setFontSize(fontInfo.getFontSize());
@@ -393,8 +394,8 @@ public class Code2Present {
             counter++;
             XSLFTextParagraph p1 = contentShape.addNewTextParagraph();
 
-            p1.setIndentLevel(0);
-            p1.setBullet(false);
+            p1.setIndentLevel(1);
+            p1.setBullet(true);
             p1.setBulletAutoNumber(AutoNumberingScheme.arabicParenRight, counter);
 
             XSLFTextRun r1 = p1.addNewTextRun();
