@@ -37,3 +37,7 @@ code2present/build/install/code2present/bin/code2present
 
 
 ```
+
+## Example presentation
+
+Inside demo subdirectory you can find the example presentation. 
