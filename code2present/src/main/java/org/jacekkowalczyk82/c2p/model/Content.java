@@ -13,8 +13,8 @@ public class Content {
     private ContentType contentType;
     private String text;
     private String image;
-    private List<String> ulList;
-    private List<String> liList;
+    private List<String> list;
+//    private List<String> liList;
 
     public static Content withText(String text) {
         Content c =  new Content();
@@ -43,7 +43,7 @@ public class Content {
         Content c =  new Content();
         
         List<String> list = Arrays.stream(listArgs).collect(Collectors.toList());
-        c.ulList = list;
+        c.list = list;
         c.contentType = ContentType.UL_LIST;
         return c;
     }
@@ -51,7 +51,7 @@ public class Content {
     public static Content withLiList(String ... listArgs) {
         Content c =  new Content();
         List<String> list = Arrays.stream(listArgs).collect(Collectors.toList());
-        c.liList = list;
+        c.list = list;
         c.contentType = ContentType.LI_LIST;
         return c;
     }
@@ -75,13 +75,13 @@ public class Content {
         return text;
     }
 
-    public List<String> getUlList() {
-        return ulList;
+    public List<String> getList() {
+        return list;
     }
 
-    public List<String> getLiList() {
-        return liList;
-    }
+//    public List<String> getLiList() {
+//        return liList;
+//    }
 
 
 }

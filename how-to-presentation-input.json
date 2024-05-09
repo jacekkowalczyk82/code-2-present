@@ -47,8 +47,7 @@
       "contentType" : "UL_LIST",
       "text" : null,
       "image" : null,
-      "ulList" : [ "curl -s \"https://get.sdkman.io\" | bash", "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"", "sdk install gradle", "sdk install java 11.0.22-tem", "gradle init" ],
-      "liList" : null
+      "list" : [ "curl -s \"https://get.sdkman.io\" | bash", "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"", "sdk install gradle", "sdk install java 11.0.22-tem", "gradle init" ]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -59,8 +58,7 @@
       "contentType" : "UL_LIST",
       "text" : null,
       "image" : null,
-      "ulList" : [ "https://www.baeldung.com/apache-poi-slideshow", "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java" ],
-      "liList" : null
+      "list" : [ "https://www.baeldung.com/apache-poi-slideshow", "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java" ]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -71,8 +69,7 @@
       "contentType" : "CODE",
       "text" : "./gradlew build \n# generate scripts and install package \n./gradlew installDist \n# Running the default DummyPresentation \ncode2present/build/install/code2present/bin/code2present",
       "image" : null,
-      "ulList" : null,
-      "liList" : null
+      "list" : null
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -87,8 +84,7 @@
       "contentType" : "CODE",
       "text" : "// Your First Program \n\nclass HelloWorld { \n    public static void main(String[] args) { \n        System.out.println(\"Hello, World!\");  \n    } \n} \n",
       "image" : null,
-      "ulList" : null,
-      "liList" : null
+      "list" : null
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -99,8 +95,18 @@
       "contentType" : "TEXT",
       "text" : "this is a paragraph text on the slide 2",
       "image" : null,
-      "ulList" : null,
-      "liList" : null
+      "list" : null
+    },
+    "contentFontInfo" : {
+      "fontSize" : 18.0
+    }
+  }, {
+    "slideTitle" : "Slide with IMAGE",
+    "content" : {
+      "contentType" : "IMAGE",
+      "text" : null,
+      "image" : "example_images/github.png",
+      "list" : null
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -111,8 +117,7 @@
       "contentType" : "UL_LIST",
       "text" : null,
       "image" : null,
-      "ulList" : [ "Element 1 ", "Element 2", "Element 3" ],
-      "liList" : null
+      "list" : [ "Element 1 ", "Element 2", "Element 3" ]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -123,8 +128,7 @@
       "contentType" : "LI_LIST",
       "text" : null,
       "image" : null,
-      "ulList" : null,
-      "liList" : [ "Element 1 ", "Element 2", "Element 3" ]
+      "list" : [ "Element 1 ", "Element 2", "Element 3" ]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -135,8 +139,7 @@
       "contentType" : "TEXT",
       "text" : "The next slide will be empty",
       "image" : null,
-      "ulList" : null,
-      "liList" : null
+      "list" : null
     },
     "contentFontInfo" : {
       "fontSize" : 18.0

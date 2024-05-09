@@ -4,15 +4,16 @@
 package org.jacekkowalczyk82.c2p;
 
 import org.apache.poi.sl.usermodel.AutoNumberingScheme;
+import org.apache.poi.sl.usermodel.PictureData;
 import org.apache.poi.sl.usermodel.Placeholder;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xslf.usermodel.*;
 import org.jacekkowalczyk82.c2p.model.Content;
 import org.jacekkowalczyk82.c2p.model.FontInfo;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.awt.Rectangle;
 
 public class Code2Present {
 
-    private XMLSlideShow p;
+    private XMLSlideShow presentation;
     private XSLFSlide titleSlide;
     private XSLFSlideMaster defaultMaster;
     private XSLFSlideLayout titleLayout;
@@ -87,13 +88,13 @@ public class Code2Present {
 
     public void fromTemplate(String templateFileName) {
         try {
-            p = new XMLSlideShow(
+            presentation = new XMLSlideShow(
                     new FileInputStream(templateFileName));
 
-            defaultMaster = p.getSlideMasters().get(0);
+            defaultMaster = presentation.getSlideMasters().get(0);
 
             System.out.println("Available slide layouts:");
-            for(XSLFSlideMaster master : p.getSlideMasters()){
+            for(XSLFSlideMaster master : presentation.getSlideMasters()){
                 for(XSLFSlideLayout layout : master.getSlideLayouts()){
                     System.out.println("    "+ layout.getType());
                 }
@@ -184,7 +185,7 @@ public class Code2Present {
         try {
             System.out.println("Saving presentation to: " + targetPresentationFileName);
             out = new FileOutputStream(targetPresentationFileName);
-            p.write(out);
+            presentation.write(out);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -203,7 +204,7 @@ public class Code2Present {
                     = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
         }
 
-        XSLFSlide slide = p.createSlide(layout);
+        XSLFSlide slide = presentation.createSlide(layout);
 
         copyPlaceHoldersFromTemplate(this.titleSlide, slide);
 
@@ -247,7 +248,7 @@ public class Code2Present {
                     = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
         }
 
-        XSLFSlide slide = p.createSlide(layout);
+        XSLFSlide slide = presentation.createSlide(layout);
 
 //        copyPlaceHoldersFromTemplate(this.titleSlide, slide);
 
@@ -310,10 +311,13 @@ public class Code2Present {
                 addText(contentShape, content.getText(), fontInfo);
                 break; 
             case UL_LIST:
-                addUlList(contentShape, content.getUlList(), fontInfo);
+                addUlList(contentShape, content.getList(), fontInfo);
                 break;
             case LI_LIST:
-                addLiList(contentShape, content.getLiList(), fontInfo);
+                addLiList(contentShape, content.getList(), fontInfo);
+                break;
+            case IMAGE:
+                addImage(presentation, slide, content.getImage());
                 break;
             
         }
@@ -327,6 +331,36 @@ public class Code2Present {
 //        }
         this.slideNumber++;
         
+    }
+
+    private void addImage(XMLSlideShow presentation, XSLFSlide slide, String imagePath) {
+        byte[] pictureData = null;
+        try {
+            pictureData = IOUtils.toByteArray(
+                    new FileInputStream(imagePath));
+
+            BufferedImage bimg = ImageIO.read(new File(imagePath));
+            int width          = bimg.getWidth();
+            int height         = bimg.getHeight();
+            double widthRatio = this.getSlideContentRectangle().getWidth() / width;
+//            double heightRatio = this.getSlideContentRectangle().getHeight() / height;
+
+            Rectangle anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
+                    new Double(this.getSlideContentRectangle().getY()).intValue(),
+                    new Double(this.getSlideContentRectangle().getWidth()).intValue(),
+                    new Double(height * widthRatio).intValue());
+
+            XSLFPictureData pd
+                    = presentation.addPicture(pictureData, PictureData.PictureType.PNG);
+            XSLFPictureShape picture = slide.createPicture(pd);
+
+            picture.setAnchor(anchor);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 
@@ -411,7 +445,7 @@ public class Code2Present {
                     = defaultMaster.getLayout(SlideLayout.TEXT);
         }
 
-        XSLFSlide slide = p.createSlide(layout);
+        XSLFSlide slide = presentation.createSlide(layout);
         XSLFTextShape titleShape = slide.getPlaceholder(0);
         XSLFTextShape contentShape = slide.getPlaceholder(1);
 
@@ -429,7 +463,7 @@ public class Code2Present {
                     = defaultMaster.getLayout(SlideLayout.TITLE);
         }
 
-        titleSlide = p.getSlides().get(0);
+        titleSlide = presentation.getSlides().get(0);
 
         XSLFTextShape[] placeholders = titleSlide.getPlaceholders();
         System.out.println("Title Slide placeholders before: ");
