@@ -37,6 +37,15 @@ public class Code2Present {
     private Rectangle slideContentRectangle;
     private Rectangle slideFooterRectangle;
     private FontInfo footerFontInfo;
+    private String footerTemplate;
+
+    public String getFooterTemplate() {
+        return footerTemplate;
+    }
+
+    public void setFooterTemplate(String footerTemplate) {
+        this.footerTemplate = footerTemplate;
+    }
 
     public FontInfo getFooterFontInfo() {
         return footerFontInfo;
@@ -272,9 +281,7 @@ public class Code2Present {
              slide.removeShape(placeHold);
 
          }
-        
-//        XSLFTextShape titleShape = slide.getPlaceholder(0);
-        // XSLFTextShape contentShape = slide.getPlaceholder(1);
+
 
         XSLFTextShape titleShape = slide.createTextBox();
         titleShape.setPlaceholder(Placeholder.TITLE);
@@ -289,17 +296,13 @@ public class Code2Present {
         footerShape.setAnchor(this.getSlideFooterRectangle());
 
         XSLFTextParagraph footerParagrapth = footerShape.addNewTextParagraph();
-//        XSLFTextParagraph footerParagrapth = footerShape.getTextParagraphs().get(0);
 
         footerParagrapth.setIndentLevel(0);
         footerParagrapth.setBullet(false);
 
         XSLFTextRun footerRun1 = footerParagrapth.addNewTextRun();
         footerRun1.setFontSize(this.getFooterFontInfo().getFontSize());
-        footerRun1.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
-
-
-//        footerShape.setText(String.format("%s         JacekKowalczyk82.org               %d", formatter.format(nowTime), this.slideNumber));
+        footerRun1.setText(String.format(this.getFooterTemplate(), formatter.format(nowTime), this.slideNumber));
 
         titleShape.setText(slideTitle);
 

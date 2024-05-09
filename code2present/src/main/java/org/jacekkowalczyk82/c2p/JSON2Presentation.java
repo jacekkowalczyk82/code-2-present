@@ -31,6 +31,7 @@ public class JSON2Presentation {
             c2p.setSlideContentRectangle(pres.getConfiguration().getSlideContentRectangle().toAWTRectangle());
             c2p.setSlideFooterRectangle(pres.getConfiguration().getSlideFooterRectangle().toAWTRectangle());
             c2p.setFooterFontInfo(pres.getConfiguration().getFooterFontInfo());
+            c2p.setFooterTemplate(pres.getConfiguration().getFooterTemplate());
 
             c2p.title(pres.getTitleSlide().getTitle(), pres.getTitleSlide().getSubTitle());
 
