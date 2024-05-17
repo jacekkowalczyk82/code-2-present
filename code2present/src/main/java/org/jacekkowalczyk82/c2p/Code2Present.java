@@ -346,12 +346,21 @@ public class Code2Present {
             int width          = bimg.getWidth();
             int height         = bimg.getHeight();
             double widthRatio = this.getSlideContentRectangle().getWidth() / width;
-//            double heightRatio = this.getSlideContentRectangle().getHeight() / height;
+            double heightRatio = this.getSlideContentRectangle().getHeight() / height;
 
-            Rectangle anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
-                    new Double(this.getSlideContentRectangle().getY()).intValue(),
-                    new Double(this.getSlideContentRectangle().getWidth()).intValue(),
-                    new Double(height * widthRatio).intValue());
+            Rectangle anchor = null;
+            if (widthRatio >= heightRatio) {
+                anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
+                        new Double(this.getSlideContentRectangle().getY()).intValue(),
+                        new Double(this.getSlideContentRectangle().getWidth()).intValue(),
+                        new Double(height * widthRatio).intValue());
+            } else {
+                anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
+                        new Double(this.getSlideContentRectangle().getY()).intValue(),
+                        new Double(width * heightRatio).intValue(),
+                        new Double(this.getSlideContentRectangle().getHeight()).intValue());
+            }
+
 
             XSLFPictureData pd
                     = presentation.addPicture(pictureData, PictureData.PictureType.PNG);
