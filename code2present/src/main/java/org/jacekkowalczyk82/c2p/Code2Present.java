@@ -14,6 +14,7 @@ import org.jacekkowalczyk82.c2p.model.FontInfo;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -320,7 +321,7 @@ public class Code2Present {
                 addLiList(contentShape, content.getList(), fontInfo);
                 break;
             case IMAGE:
-                addImage(presentation, slide, content.getImage());
+                addImage(presentation, slide, content.getImage(), content.getImageResizeRatio());
                 break;
             
         }
@@ -336,7 +337,7 @@ public class Code2Present {
         
     }
 
-    private void addImage(XMLSlideShow presentation, XSLFSlide slide, String imagePath) {
+    private void addImage(XMLSlideShow presentation, XSLFSlide slide, String imagePath, BigDecimal imageResizeRatio) {
         byte[] pictureData = null;
         try {
             pictureData = IOUtils.toByteArray(
@@ -349,7 +350,13 @@ public class Code2Present {
             double heightRatio = this.getSlideContentRectangle().getHeight() / height;
 
             Rectangle anchor = null;
-            if (widthRatio >= heightRatio) {
+            if (imageResizeRatio !=null) {
+                anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
+                        new Double(this.getSlideContentRectangle().getY()).intValue(),
+                        new Double(width * imageResizeRatio.doubleValue()).intValue(),
+                        new Double(height * imageResizeRatio.doubleValue()).intValue());
+            }
+            else if (widthRatio >= heightRatio) {
                 anchor = new Rectangle(new Double(this.getSlideContentRectangle().getX()).intValue(),
                         new Double(this.getSlideContentRectangle().getY()).intValue(),
                         new Double(this.getSlideContentRectangle().getWidth()).intValue(),

@@ -1,5 +1,6 @@
 package org.jacekkowalczyk82.c2p.model;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,8 @@ public class Content {
     // private static Content instance;
 
     
+    private BigDecimal imageResizeRatio;
+
 
     private ContentType contentType;
     private String text;
@@ -78,6 +81,15 @@ public class Content {
     public List<String> getList() {
         return list;
     }
+
+    public BigDecimal getImageResizeRatio() {
+        return imageResizeRatio;
+    }
+
+    public void setImageResizeRatio(BigDecimal imageResizeRatio) {
+        this.imageResizeRatio = imageResizeRatio;
+    }
+
 
 //    public List<String> getLiList() {
 //        return liList;
