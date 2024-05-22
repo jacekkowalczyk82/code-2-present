@@ -5,10 +5,12 @@ import org.jacekkowalczyk82.c2p.model.Presentation;
 import org.jacekkowalczyk82.c2p.model.Slide;
 
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class JSON2Presentation {
 
-
+    private static Logger LOGGER = LogManager.getLogger(JSON2Presentation.class);
 
     public static void main(String[] args) {
 
@@ -20,7 +22,7 @@ public class JSON2Presentation {
 
 
             Code2Present c2p = new Code2Present();
-            System.out.println("Generating presentation "+ pres.getConfiguration().getTargetPresentationFile());
+            LOGGER.info("Generating presentation "+ pres.getConfiguration().getTargetPresentationFile());
 
             c2p.fromTemplate(pres.getConfiguration().getFromTemplate());
             c2p.toPresentation(pres.getConfiguration().getTargetPresentationFile());

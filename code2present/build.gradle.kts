@@ -10,7 +10,7 @@ plugins {
     application
 }
 
-version = "0.6-20240517"
+version = "0.7-20240522"
 
 repositories {
     // Use Maven Central for resolving dependencies.

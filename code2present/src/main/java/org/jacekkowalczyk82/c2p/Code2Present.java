@@ -3,6 +3,8 @@
  */
 package org.jacekkowalczyk82.c2p;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.sl.usermodel.AutoNumberingScheme;
 import org.apache.poi.sl.usermodel.PictureData;
 import org.apache.poi.sl.usermodel.Placeholder;
@@ -22,6 +24,9 @@ import java.awt.Rectangle;
 
 
 public class Code2Present {
+
+    private static Logger LOGGER = LogManager.getLogger(Code2Present.class);
+
 
     private XMLSlideShow presentation;
     private XSLFSlide titleSlide;
@@ -103,10 +108,12 @@ public class Code2Present {
 
             defaultMaster = presentation.getSlideMasters().get(0);
 
-            System.out.println("Available slide layouts:");
+            LOGGER.debug("Available slide layouts:");
+
             for(XSLFSlideMaster master : presentation.getSlideMasters()){
                 for(XSLFSlideLayout layout : master.getSlideLayouts()){
                     System.out.println("    "+ layout.getType());
+                    LOGGER.debug("    "+ layout.getType());
                 }
             }
 
@@ -157,12 +164,13 @@ public class Code2Present {
 //     }
 
     public void copyPlaceHoldersFromTemplate(XSLFSlide titleSlide, XSLFSlide slide) {  
-  
+
+        LOGGER.info("Copying placeholders from template");
         List<XSLFShape> titleSlideShapes = titleSlide.getShapes();  
         for (XSLFShape shape : titleSlideShapes) {  
-            Placeholder ph = shape.getPlaceholder();  
-  
-                System.out.println("Copying from " + shape.getShapeName() + " " + shape.getPlaceholder());  
+            Placeholder ph = shape.getPlaceholder();
+
+                LOGGER.debug("    Copying from " + shape.getShapeName() + " " + shape.getPlaceholder());
 //                ((XSLFTextShape) shape).setText("Test Text");  
   
                 if (ph == null) {  
@@ -174,8 +182,8 @@ public class Code2Present {
                     case DATETIME:  
                     case SLIDE_NUMBER:
 //                    case CONTENT:
-                    case FOOTER:  
-                        System.out.println("Copying placeholder : "+ ph);  
+                    case FOOTER:
+                        LOGGER.debug("    Copying placeholder : "+ ph);
                         slide.getXmlObject().getCSld().getSpTree().addNewSp().set(shape.getXmlObject().copy());  
                         break; 
                     
@@ -193,7 +201,7 @@ public class Code2Present {
 
         FileOutputStream out = null;
         try {
-            System.out.println("Saving presentation to: " + targetPresentationFileName);
+            LOGGER.info("Saving presentation to: " + targetPresentationFileName);
             out = new FileOutputStream(targetPresentationFileName);
             presentation.write(out);
 
@@ -203,12 +211,14 @@ public class Code2Present {
             throw new RuntimeException(e);
         } finally {
             out.close();
+            LOGGER.info("Generating presentation "+ targetPresentationFileName + " - DONE");
         }
 
 
     }
 
     public void emptySlide() {
+        LOGGER.info("Adding empty slide");
         if (layout == null) {
             layout
                     = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
@@ -249,7 +259,7 @@ public class Code2Present {
 
     public void slideWithContent(String slideTitle, Content content, FontInfo fontInfo) {
 
-
+        LOGGER.info("Adding Content slide: " + slideTitle);
         LocalDateTime nowTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
 
@@ -278,7 +288,7 @@ public class Code2Present {
 //        }
 
          for (XSLFTextShape placeHold : placeholders) {
-             System.out.println("    Removing placeHold: " + placeHold.getShapeId() + " " + placeHold.getShapeName());
+             LOGGER.debug("    Removing placeHold: " + placeHold.getShapeId() + " " + placeHold.getShapeName());
              slide.removeShape(placeHold);
 
          }
@@ -338,6 +348,7 @@ public class Code2Present {
     }
 
     private void addImage(XMLSlideShow presentation, XSLFSlide slide, String imagePath, BigDecimal imageResizeRatio) {
+        LOGGER.info("Adding IMAGE " + imagePath);
         byte[] pictureData = null;
         try {
             pictureData = IOUtils.toByteArray(
@@ -384,6 +395,7 @@ public class Code2Present {
 
 
     private void addUlList(XSLFTextShape contentShape, List<String> ulList, FontInfo fontInfo) {
+        LOGGER.info("Adding UL_LIST ");
         contentShape.clearText();
 
         
@@ -403,6 +415,7 @@ public class Code2Present {
 
 
     private void addLiList(XSLFTextShape contentShape, List<String> liList, FontInfo fontInfo) {
+        LOGGER.info("Adding LI_LIST ");
         contentShape.clearText();
         int counter = 0;
 
@@ -422,7 +435,8 @@ public class Code2Present {
     }
 
     private void addText(XSLFTextShape contentShape, String text, FontInfo fontInfo) {
-        System.out.println("Old shape     " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText()); 
+        LOGGER.info("Adding TEXT ");
+        LOGGER.debug("    Old shape     " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText());
         
         contentShape.clearText();
 //        contentShape.setText(text);
@@ -435,18 +449,19 @@ public class Code2Present {
         r1.setText(text);
         r1.setFontSize(fontInfo.getFontSize());
 
-        System.out.println("New shape TEXT    " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText()); 
+        LOGGER.debug("    New shape TEXT    " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText());
         
 
     }
 
     private void addCodeText(XSLFTextShape contentShape, String code, FontInfo fontInfo) {
+        LOGGER.info("Adding CODE ");
         contentShape.clearText();
         // contentShape.setText("hmmmm ");
         contentShape.getTextParagraphs().forEach(tp-> {
-            System.out.println("Empty Text Paragrapth "+ tp.getText());
+            LOGGER.debug("    Empty Text Paragrapth "+ tp.getText());
         });
-        System.out.println("Paragraphs size: "+ contentShape.getTextParagraphs().size());
+        LOGGER.debug("    Paragraphs size: "+ contentShape.getTextParagraphs().size());
         XSLFTextParagraph p = contentShape.addNewTextParagraph();
         p.setBullet(false);
 
@@ -478,6 +493,7 @@ public class Code2Present {
     }
 
     public void title(String thisIsTitle, String subtitleAuthorDate) {
+        LOGGER.info("Creating Title Slide ");
         if (titleLayout == null) {
             titleLayout
                     = defaultMaster.getLayout(SlideLayout.TITLE);
