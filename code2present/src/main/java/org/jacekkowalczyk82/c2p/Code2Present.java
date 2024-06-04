@@ -409,6 +409,12 @@ public class Code2Present {
             XSLFTextRun r1 = p1.addNewTextRun();
             r1.setFontSize(fontInfo.getFontSize());
             r1.setText(item);
+
+            if (item.startsWith("http")) {
+                XSLFHyperlink link = r1.createHyperlink();
+                link.setAddress(item);
+            }
+
         });
         
     }
@@ -430,6 +436,11 @@ public class Code2Present {
             XSLFTextRun r1 = p1.addNewTextRun();
             r1.setFontSize(fontInfo.getFontSize());
             r1.setText(item);
+
+            if (item.startsWith("http")) {
+                XSLFHyperlink link = r1.createHyperlink();
+                link.setAddress(item);
+            }
         };
 
     }

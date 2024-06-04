@@ -124,7 +124,8 @@
       "contentType" : "UL_LIST",
       "text" : null,
       "image" : null,
-      "list" : [ "Element 1 ", "Element 2", "Element 3" ]
+      "list" : [ "Element 1 ", "Element 2", "Element 3",
+      "http://www.google.com"]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
@@ -136,7 +137,8 @@
       "contentType" : "LI_LIST",
       "text" : null,
       "image" : null,
-      "list" : [ "Element 1 ", "Element 2", "Element 3" ]
+      "list" : [ "Element 1 ", "Element 2", "Element 3",
+        "http://www.google.com"]
     },
     "contentFontInfo" : {
       "fontSize" : 18.0
