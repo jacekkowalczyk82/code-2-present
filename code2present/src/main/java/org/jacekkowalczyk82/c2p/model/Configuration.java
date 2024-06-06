@@ -1,7 +1,5 @@
 package org.jacekkowalczyk82.c2p.model;
 
-import java.awt.*;
-
 public class Configuration {
     private String fromTemplate;
     private String targetPresentationFile;
@@ -13,7 +11,7 @@ public class Configuration {
     private PlaceHolderRectangle slideTitleRectangle;
     private PlaceHolderRectangle slideContentRectangle;
     private PlaceHolderRectangle slideFooterRectangle;
-    private FontInfo footerFontInfo;
+    private StyleInfo footerFontInfo;
 
     public String getFromTemplate() {
         return fromTemplate;
@@ -79,11 +77,11 @@ public class Configuration {
         this.slideFooterRectangle = slideFooterRectangle;
     }
 
-    public FontInfo getFooterFontInfo() {
+    public StyleInfo getFooterFontInfo() {
         return footerFontInfo;
     }
 
-    public void setFooterFontInfo(FontInfo footerFontInfo) {
+    public void setFooterFontInfo(StyleInfo footerFontInfo) {
         this.footerFontInfo = footerFontInfo;
     }
 }

@@ -50,8 +50,9 @@
       "image" : null,
       "list" : [ "curl -s \"https://get.sdkman.io\" | bash", "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"", "sdk install gradle", "sdk install java 11.0.22-tem", "gradle init" ]
     },
-    "contentFontInfo" : {
-      "fontSize" : 18.0
+    "contentStyleInfo" : {
+      "fontSize" : 18.0,
+      "bulletCharacters": "- "
     }
   }, {
     "slideTitle" : "knowledge and links",
@@ -62,8 +63,9 @@
       "image" : null,
       "list" : [ "https://www.baeldung.com/apache-poi-slideshow", "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java" ]
     },
-    "contentFontInfo" : {
-      "fontSize" : 18.0
+    "contentStyleInfo" : {
+      "fontSize" : 18.0,
+      "bulletCharacters": "- "
     }
   }, {
     "slideTitle" : "Building and running",
@@ -74,13 +76,14 @@
       "image" : null,
       "list" : null
     },
-    "contentFontInfo" : {
-      "fontSize" : 18.0
+    "contentStyleInfo" : {
+      "fontSize" : 18.0,
+      "bulletCharacters": "- "
     }
   }, {
     "slideTitle" : null,
     "content" : null,
-    "contentFontInfo" : null
+    "contentStyleInfo" : null
   }, {
     "slideTitle" : "Slide with CODE",
     "content" : {
@@ -90,7 +93,7 @@
       "image" : null,
       "list" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -102,7 +105,7 @@
       "image" : null,
       "list" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -114,7 +117,7 @@
       "image" : "example_images/github.png",
       "list" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -127,8 +130,9 @@
       "list" : [ "Element 1 ", "Element 2", "Element 3",
       "http://www.google.com"]
     },
-    "contentFontInfo" : {
-      "fontSize" : 18.0
+    "contentStyleInfo" : {
+      "fontSize" : 18.0,
+      "bulletCharacters": "> "
     }
   }, {
     "slideTitle" : "Slide with Numbered List",
@@ -140,7 +144,7 @@
       "list" : [ "Element 1 ", "Element 2", "Element 3",
         "http://www.google.com"]
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -152,12 +156,12 @@
       "image" : null,
       "list" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
     "slideTitle" : null,
     "content" : null,
-    "contentFontInfo" : null
+    "contentStyleInfo" : null
   } ]
 }

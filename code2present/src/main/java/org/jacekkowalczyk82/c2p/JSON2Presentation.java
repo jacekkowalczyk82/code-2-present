@@ -38,7 +38,7 @@ public class JSON2Presentation {
             c2p.title(pres.getTitleSlide().getTitle(), pres.getTitleSlide().getSubTitle());
 
             for (Slide s: pres.getSlides()) {
-                c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentFontInfo());
+                c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentStyleInfo());
             }
 
             try {

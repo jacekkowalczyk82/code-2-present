@@ -3,12 +3,12 @@ package org.jacekkowalczyk82.c2p.model;
 public class Slide {
     private String slideTitle;
     private Content content;
-    private FontInfo contentFontInfo;
+    private StyleInfo contentStyleInfo;
 
-    public Slide(String slideTitle, Content content, FontInfo fontInfo) {
+    public Slide(String slideTitle, Content content, StyleInfo fontInfo) {
         this.setSlideTitle(slideTitle);
         this.setContent(content);
-        this.setContentFontInfo(fontInfo);
+        this.setContentStyleInfo(fontInfo);
     }
 
     private Slide(){
@@ -35,11 +35,11 @@ public class Slide {
         this.content = content;
     }
 
-    public FontInfo getContentFontInfo() {
-        return contentFontInfo;
+    public StyleInfo getContentStyleInfo() {
+        return contentStyleInfo;
     }
 
-    public void setContentFontInfo(FontInfo contentFontInfo) {
-        this.contentFontInfo = contentFontInfo;
+    public void setContentStyleInfo(StyleInfo contentStyleInfo) {
+        this.contentStyleInfo = contentStyleInfo;
     }
 }

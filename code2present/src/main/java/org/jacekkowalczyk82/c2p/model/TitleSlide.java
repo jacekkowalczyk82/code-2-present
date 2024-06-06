@@ -4,7 +4,7 @@ package org.jacekkowalczyk82.c2p.model;
 public class TitleSlide {
     private String title;
     private String subTitle;
-    private FontInfo contentFontInfo;
+    private StyleInfo contentStyleInfo;
 
     public String getTitle() {
         return title;

@@ -6,8 +6,6 @@ package org.jacekkowalczyk82.c2p;
 import org.jacekkowalczyk82.c2p.model.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class HowToPresentationFromJSONModel {
@@ -35,7 +33,7 @@ public class HowToPresentationFromJSONModel {
         c2p.title(pres.getTitleSlide().getTitle(), pres.getTitleSlide().getSubTitle());
 
         for (Slide s: pres.getSlides()) {
-            c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentFontInfo());
+            c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentStyleInfo());
         }
 
         try {

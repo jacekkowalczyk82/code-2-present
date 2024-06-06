@@ -50,7 +50,7 @@
       "ulList" : [ "curl -s \"https://get.sdkman.io\" | bash", "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"", "sdk install gradle", "sdk install java 11.0.22-tem", "gradle init" ],
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -62,7 +62,7 @@
       "ulList" : [ "https://www.baeldung.com/apache-poi-slideshow", "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html", "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java" ],
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -74,13 +74,13 @@
       "ulList" : null,
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
     "slideTitle" : null,
     "content" : null,
-    "contentFontInfo" : null
+    "contentStyleInfo" : null
   }, {
     "slideTitle" : "Slide with CODE",
     "content" : {
@@ -90,7 +90,7 @@
       "ulList" : null,
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -102,7 +102,7 @@
       "ulList" : null,
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -114,7 +114,7 @@
       "ulList" : [ "Element 1 ", "Element 2", "Element 3" ],
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -126,7 +126,7 @@
       "ulList" : null,
       "liList" : [ "Element 1 ", "Element 2", "Element 3" ]
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
@@ -138,12 +138,12 @@
       "ulList" : null,
       "liList" : null
     },
-    "contentFontInfo" : {
+    "contentStyleInfo" : {
       "fontSize" : 18.0
     }
   }, {
     "slideTitle" : null,
     "content" : null,
-    "contentFontInfo" : null
+    "contentStyleInfo" : null
   } ]
 }

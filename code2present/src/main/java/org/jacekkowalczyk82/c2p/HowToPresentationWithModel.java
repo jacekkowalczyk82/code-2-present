@@ -30,7 +30,7 @@ public class HowToPresentationWithModel {
         config.setSlideTitleRectangle(new PlaceHolderRectangle(50, 30, 700, 80));
         config.setSlideContentRectangle(new PlaceHolderRectangle(50, 100, 680, 300));
         config.setSlideFooterRectangle(new PlaceHolderRectangle(450, 400, 300, 40));
-        config.setFooterFontInfo(FontInfo.withFontSize(14.0d));
+        config.setFooterFontInfo(StyleInfo.withFontSize(14.0d));
         config.setFooterTemplate("%s         JacekKowalczyk82.org               %d");
 
         pres.setConfiguration(config);
@@ -50,13 +50,13 @@ public class HowToPresentationWithModel {
                 "source \"/home/ubuntu/.sdkman/bin/sdkman-init.sh\"",
                 "sdk install gradle",
                 "sdk install java 11.0.22-tem",
-                "gradle init"), FontInfo.withFontSize(18.0d)));
+                "gradle init"), StyleInfo.withFontSize(18.0d)));
 
         mySlides.add(new Slide("knowledge and links", Content.withUlList(
                         "https://www.baeldung.com/apache-poi-slideshow",
                         "shttps://poi.apache.org/components/slideshow/xslf-cookbook.html",
                         "https://github.com/eugenp/tutorials/blob/master/apache-poi-2/src/main/java/com/baeldung/poi/powerpoint/PowerPointHelper.java"),
-                FontInfo.withFontSize(18.0d)
+                StyleInfo.withFontSize(18.0d)
         ));
 
         mySlides.add(new Slide("Building and running", Content.withCodeText(
@@ -64,7 +64,7 @@ public class HowToPresentationWithModel {
                         "# generate scripts and install package \n" +
                         "./gradlew installDist \n" +
                         "# Running the default DummyPresentation \n" +
-                        "code2present/build/install/code2present/bin/code2present"), FontInfo.withFontSize(18.0d)
+                        "code2present/build/install/code2present/bin/code2present"), StyleInfo.withFontSize(18.0d)
         ));
 
 
@@ -76,24 +76,24 @@ public class HowToPresentationWithModel {
                 "    public static void main(String[] args) { \n" +
                 "        System.out.println(\"Hello, World!\");  \n" +
                 "    } \n" +
-                "} \n"), FontInfo.withFontSize(18.0d)));
+                "} \n"), StyleInfo.withFontSize(18.0d)));
 
-        mySlides.add(new Slide("Slide with Text", Content.withText("this is a paragraph text on the slide 2"), FontInfo.withFontSize(18.0d)));
+        mySlides.add(new Slide("Slide with Text", Content.withText("this is a paragraph text on the slide 2"), StyleInfo.withFontSize(18.0d)));
 
         mySlides.add(new Slide("Slide with Bullet List", Content.withUlList(
                 "Element 1 ",
                 "Element 2",
-                "Element 3"), FontInfo.withFontSize(18.0d)
+                "Element 3"), StyleInfo.withFontSize(18.0d)
         ));
 
         mySlides.add(new Slide("Slide with Numbered List", Content.withLiList(
                 "Element 1 ",
                 "Element 2",
-                "Element 3"), FontInfo.withFontSize(18.0d)
+                "Element 3"), StyleInfo.withFontSize(18.0d)
         ));
 
 
-        mySlides.add(new Slide("You can have empty slides", Content.withText("The next slide will be empty"), FontInfo.withFontSize(18.0d)));
+        mySlides.add(new Slide("You can have empty slides", Content.withText("The next slide will be empty"), StyleInfo.withFontSize(18.0d)));
         mySlides.add(Slide.emptySlide());
 
         JSONTools.writePresentationToJsonFile(pres, "how-to-presentation.json");
@@ -115,7 +115,7 @@ public class HowToPresentationWithModel {
         c2p.title(pres.getTitleSlide().getTitle(), pres.getTitleSlide().getSubTitle());
 
         for (Slide s: pres.getSlides()) {
-            c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentFontInfo());
+            c2p.slide(s.getSlideTitle(), s.getContent(), s.getContentStyleInfo());
         }
 
         try {

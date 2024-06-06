@@ -11,7 +11,7 @@ import org.apache.poi.sl.usermodel.Placeholder;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xslf.usermodel.*;
 import org.jacekkowalczyk82.c2p.model.Content;
-import org.jacekkowalczyk82.c2p.model.FontInfo;
+import org.jacekkowalczyk82.c2p.model.StyleInfo;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -42,7 +42,7 @@ public class Code2Present {
     private Rectangle slideTitleRectangle;
     private Rectangle slideContentRectangle;
     private Rectangle slideFooterRectangle;
-    private FontInfo footerFontInfo;
+    private StyleInfo footerFontInfo;
     private String footerTemplate;
 
     public String getFooterTemplate() {
@@ -53,11 +53,11 @@ public class Code2Present {
         this.footerTemplate = footerTemplate;
     }
 
-    public FontInfo getFooterFontInfo() {
+    public StyleInfo getFooterFontInfo() {
         return footerFontInfo;
     }
 
-    public void setFooterFontInfo(FontInfo footerFontInfo) {
+    public void setFooterFontInfo(StyleInfo footerFontInfo) {
         this.footerFontInfo = footerFontInfo;
     }
 
@@ -249,7 +249,7 @@ public class Code2Present {
         
     }
 
-    public void slide(String slideTitle, Content content, FontInfo fontInfo){
+    public void slide(String slideTitle, Content content, StyleInfo fontInfo){
         if (content == null ) {
             emptySlide();
         } else {
@@ -257,7 +257,7 @@ public class Code2Present {
         }
     }
 
-    public void slideWithContent(String slideTitle, Content content, FontInfo fontInfo) {
+    public void slideWithContent(String slideTitle, Content content, StyleInfo fontInfo) {
 
         LOGGER.info("Adding Content slide: " + slideTitle);
         LocalDateTime nowTime = LocalDateTime.now();
@@ -394,7 +394,7 @@ public class Code2Present {
     }
 
 
-    private void addUlList(XSLFTextShape contentShape, List<String> ulList, FontInfo fontInfo) {
+    private void addUlList(XSLFTextShape contentShape, List<String> ulList, StyleInfo styleInfo) {
         LOGGER.info("Adding UL_LIST ");
         contentShape.clearText();
 
@@ -404,10 +404,10 @@ public class Code2Present {
         
             p1.setIndentLevel(1);
             p1.setBullet(true);
-            p1.setBulletCharacter("* ");
+            p1.setBulletCharacter(styleInfo.getBulletCharacters());
 
             XSLFTextRun r1 = p1.addNewTextRun();
-            r1.setFontSize(fontInfo.getFontSize());
+            r1.setFontSize(styleInfo.getFontSize());
             r1.setText(item);
 
             if (item.startsWith("http")) {
@@ -420,7 +420,7 @@ public class Code2Present {
     }
 
 
-    private void addLiList(XSLFTextShape contentShape, List<String> liList, FontInfo fontInfo) {
+    private void addLiList(XSLFTextShape contentShape, List<String> liList, StyleInfo fontInfo) {
         LOGGER.info("Adding LI_LIST ");
         contentShape.clearText();
         int counter = 0;
@@ -445,7 +445,7 @@ public class Code2Present {
 
     }
 
-    private void addText(XSLFTextShape contentShape, String text, FontInfo fontInfo) {
+    private void addText(XSLFTextShape contentShape, String text, StyleInfo fontInfo) {
         LOGGER.info("Adding TEXT ");
         LOGGER.debug("    Old shape     " + contentShape.getShapeId() + " " + contentShape.getShapeName() + " - " + contentShape.getText());
         
@@ -465,7 +465,7 @@ public class Code2Present {
 
     }
 
-    private void addCodeText(XSLFTextShape contentShape, String code, FontInfo fontInfo) {
+    private void addCodeText(XSLFTextShape contentShape, String code, StyleInfo fontInfo) {
         LOGGER.info("Adding CODE ");
         contentShape.clearText();
         // contentShape.setText("hmmmm ");
