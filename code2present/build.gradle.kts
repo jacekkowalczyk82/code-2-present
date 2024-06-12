@@ -10,7 +10,7 @@ plugins {
     application
 }
 
-version = "0.9-20240606"
+version = "0.10-20240607"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -29,6 +29,8 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.logging.log4j:log4j-api:2.23.0")
     implementation("org.apache.logging.log4j:log4j-core:2.23.0")
+    // https://mvnrepository.com/artifact/com.lowagie/itext
+    implementation("com.lowagie:itext:2.1.7")
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation("com.fasterxml.jackson.core:jackson-core:2.16.2")

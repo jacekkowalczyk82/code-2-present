@@ -29,6 +29,15 @@ public class Code2Present {
 
 
     private XMLSlideShow presentation;
+
+    public XMLSlideShow getPresentation() {
+        return presentation;
+    }
+
+    public void setPresentation(XMLSlideShow presentation) {
+        this.presentation = presentation;
+    }
+
     private XSLFSlide titleSlide;
     private XSLFSlideMaster defaultMaster;
     private XSLFSlideLayout titleLayout;
