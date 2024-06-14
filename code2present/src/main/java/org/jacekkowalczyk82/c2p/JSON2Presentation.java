@@ -1,31 +1,39 @@
 package org.jacekkowalczyk82.c2p;
 
 
-import com.lowagie.text.*;
-import com.lowagie.text.Image;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfGraphics2D;
-import com.lowagie.text.pdf.PdfWriter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.poi.sl.usermodel.SlideShow;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFBackground;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
+
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.jacekkowalczyk82.c2p.model.Presentation;
 import org.jacekkowalczyk82.c2p.model.Slide;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.imageio.ImageIO;
+
 public class JSON2Presentation {
 
     private static Logger LOGGER = LogManager.getLogger(JSON2Presentation.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         if (args.length == 0) {
             usage();
@@ -62,91 +70,80 @@ public class JSON2Presentation {
 
             //save to PDF
 
-//            try {
-//                FileInputStream iStream = new FileInputStream(new File(pres.getConfiguration().getTargetPresentationFile()));
-//
-//                XMLSlideShow presentation = new XMLSlideShow(iStream);
-//                Dimension pgSize  = presentation.getPageSize();
-                Dimension pgSize  = c2p.getPresentation().getPageSize();
-                Document pdfDoc = new Document();
-                double zoom = 1; // magnify it by 2 as typical slides are low res
-                AffineTransform at = new AffineTransform();
-                at.setToScale(zoom, zoom);
+            String outputFilePath = "presentation.pdf";
 
-                try {
-                    PdfWriter pdfWriter = PdfWriter.getInstance(pdfDoc,
-                            new FileOutputStream(pres.getConfiguration().getTargetPresentationFile()+ ".pdf"));
-                    pdfDoc.setPageSize(new Rectangle((float)pgSize.getWidth(), (float)pgSize.getHeight()));
-                    pdfDoc.open();
-//                    pdfDoc.add(new Chunk(""));
+            // Load the PPTX file
+//            String inputFilePath = "presentation.pptx";
+//            XMLSlideShow ppt = new XMLSlideShow(
+//                    new FileInputStream(pres.getConfiguration().getTargetPresentationFile()));
+            XMLSlideShow ppt = c2p.getPresentation();
+            // Create a new PDF document
+            try (PDDocument document = new PDDocument()) {
+                int slideIndex = 0;
+                for (XSLFSlide slide : ppt.getSlides()) {
+                    slideIndex++;
+                    System.out.println("Rendering slide " + slideIndex);
 
-                    LOGGER.debug("Opening PDF Document");
-                    for (XSLFSlide slide: c2p.getPresentation().getSlides()) {
-                        LOGGER.debug("Adding slide "+ slide.getTitle());
+                    // Get the slide dimensions
+                    Dimension slideBounds = slide.getSlideShow().getPageSize();
+                    int width = (int) slideBounds.getWidth();
+                    int height = (int) slideBounds.getHeight();
 
-                        BufferedImage bufImg = new BufferedImage((int)Math.ceil(pgSize.width*zoom),
-                                (int)Math.ceil(pgSize.height*zoom), BufferedImage.TYPE_INT_RGB);
-                        Graphics2D graphics = bufImg.createGraphics();
-                        graphics.setTransform(at);
-                        //clear the drawing area
-                        XSLFBackground bcGround = slide.getBackground();
-                        Color bgColor = null;
-                        if (bcGround != null) {
-                            bgColor = slide.getBackground().getFillColor();
+                    // Create a BufferedImage for drawing the slide with transparency
+                    BufferedImage slideImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                    Graphics2D graphics = slideImage.createGraphics();
 
-                        }
-                        if (bgColor!=null) {
-                            graphics.setPaint(bgColor);
-                        }
-                        else {
-                            graphics.setPaint(Color.white);
-                        }
+                    // Set rendering hints for better quality
+                    graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                    graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+                    // Fill the background with white color (or transparent if needed)
+                    graphics.setColor(Color.WHITE);
+                    graphics.fillRect(0, 0, width, height);
+
+                    // Draw the slide onto the BufferedImage
+                    try {
+                        slide.draw(graphics);
+                    } catch (Exception e) {
+                        System.err.println("Error rendering slide " + slideIndex + ": " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    graphics.dispose();
 
 
-                        graphics.fill(new Rectangle2D.Float(0, 0, pgSize.width, pgSize.height));
-                        try{
-                            slide.draw(graphics);
 
-                        } catch(Exception e){
-                            //Just ignore, draw what I have
-                            e.printStackTrace();
-                        }
+                    // Save the BufferedImage to a temporary file
+                    File tempFile = File.createTempFile("slide", ".png");
+                    ImageIO.write(slideImage, "png", tempFile);
 
-                        Image image = null;
-                        try {
-                            image = Image.getInstance(bufImg, null);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        pdfDoc.setPageSize(new Rectangle(image.getScaledWidth(), image.getScaledHeight()));
-                        LOGGER.debug("At page "+ pdfDoc.getPageNumber());
+                    // Convert the temporary file to a PDImageXObject
+                    PDImageXObject pdImage = PDImageXObject.createFromFile(tempFile.getAbsolutePath(), document);
 
-//                        image.setAbsolutePosition(0, 0);
-                        pdfDoc.add(image);
+                    // Create a new page in the PDF document
+                    PDPage page = new PDPage(new PDRectangle(width, height));
+                    document.addPage(page);
 
-                        pdfDoc.newPage();
-//
-//                    PdfGraphics2D graphics  = (PdfGraphics2D) pdfWriter.getDirectContent().createGraphics((float)pgSize.getHeight(),
-//                            (float) pgSize.getHeight());
-//                    slide.draw(graphics);
-//                    graphics.dispose();
+                    // Draw the image on the PDF page
+                    try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                        contentStream.drawImage(pdImage, 0, 0, width, height);
                     }
 
-                    pdfDoc.close();
+                    // Delete the temporary file
+                    tempFile.delete();
 
-                } catch (DocumentException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Slide " + slideIndex + " rendered successfully");
+
                 }
+                // Save the PDF document
+                document.save(new FileOutputStream(outputFilePath));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-
-//
-//            } catch (FileNotFoundException e) {
-//                throw new RuntimeException(e);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
+            System.out.println("PPTX converted to PDF successfully.");
 
 
         }

@@ -25,12 +25,17 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
-    implementation("org.apache.poi:poi:5.2.5")
-    implementation("org.apache.poi:poi-ooxml:5.2.5")
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
     implementation("org.apache.logging.log4j:log4j-api:2.23.0")
     implementation("org.apache.logging.log4j:log4j-core:2.23.0")
+
     // https://mvnrepository.com/artifact/com.lowagie/itext
     implementation("com.lowagie:itext:2.1.7")
+
+    implementation("org.apache.poi:poi-scratchpad:5.2.3")
+    // Apache PDFBox dependency
+    implementation("org.apache.pdfbox:pdfbox:2.0.31") // Use the latest version available
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation("com.fasterxml.jackson.core:jackson-core:2.16.2")
